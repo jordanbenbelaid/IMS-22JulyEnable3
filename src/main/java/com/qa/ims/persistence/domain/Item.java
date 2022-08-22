@@ -6,15 +6,15 @@ public class Item {
 	private Long id;
 	private String name;
 	private double price;
-	private int stock;
+	private Long stock;
 	
-	public Item(String name, double price, int stock) {
+	public Item(String name, double price, Long stock) {
 		this.name = name;
 		this.price = price;
 		this.stock = stock;
 	}
 
-	public Item(Long id, String name, double price, int stock) {
+	public Item(Long id, String name, double price, Long stock) {
 		this.id = id;
 		this.name = name;
 		this.price = price;
@@ -45,11 +45,11 @@ public class Item {
 		this.price = price;
 	}
 
-	public int getStock() {
+	public Long getStock() {
 		return stock;
 	}
 
-	public void setStock(int stock) {
+	public void setStock(Long stock) {
 		this.stock = stock;
 	}
 
