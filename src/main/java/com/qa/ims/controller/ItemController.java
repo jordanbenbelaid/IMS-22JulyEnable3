@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.qa.ims.persistence.dao.ItemDAO;
 import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.utils.Utils;
 
@@ -35,6 +36,8 @@ public class ItemController implements CrudController<Item> {
 		LOGGER.info("Please enter how many are in stock");
 		long stock = utils.getLong();
 		Item item = itemDAO.create(new Item(name, price, stock));
+		LOGGER.info("Item created");
+		return item;
 	}
 
 	@Override
