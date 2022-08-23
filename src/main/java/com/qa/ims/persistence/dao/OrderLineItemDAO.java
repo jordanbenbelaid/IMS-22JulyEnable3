@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -33,8 +34,19 @@ public class OrderLineItemDAO implements Dao<OrderLineItem> {
 
 	@Override
 	public List<OrderLineItem> readAll() {
-		// TODO Auto-generated method stub
-		return null;
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM order_line_items");) {
+			List<OrderLineItem> orderLineItems = new ArrayList<>();
+			while (resultSet.next()) {
+				orderLineItems.add(modelFromResultSet(resultSet));
+			}
+			return orderLineItems;
+		} catch (SQLException e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return new ArrayList<>();
 	}
 
 	@Override
