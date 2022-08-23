@@ -10,6 +10,8 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.qa.ims.persistence.domain.Customer;
+import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.persistence.domain.OrderLineItem;
 import com.qa.ims.utils.DBUtils;
@@ -20,8 +22,13 @@ public class OrderLineItemDAO implements Dao<OrderLineItem> {
 	
 	@Override
 	public OrderLineItem modelFromResultSet(ResultSet resultSet) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		ItemDAO itemDAO = new ItemDAO();
+		Long id = resultSet.getLong("id");
+		Long itemId = resultSet.getLong("item_id");
+		Long quantity = resultSet.getLong("quantity");
+		Long orderId = resultSet.getLong("order_id");
+		Item item = itemDAO.read(itemId);
+		return new OrderLineItem(id, item, quantity, orderId);
 	}
 
 	@Override
