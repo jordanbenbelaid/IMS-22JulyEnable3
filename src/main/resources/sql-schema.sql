@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `ims`.`items` (
 
 CREATE TABLE IF NOT EXISTS `ims`.`orders` (
 	`id` INT NOT NULL AUTO_INCREMENT,
-	`order_number` VARCHAR(16),
+	`order_number` VARCHAR(16) UNIQUE,
 	`customer_id` INT NOT NULL,
 	PRIMARY KEY (`id`),
 	FOREIGN KEY (`customer_id`) REFERENCES `ims`.`customers` (`id`)
