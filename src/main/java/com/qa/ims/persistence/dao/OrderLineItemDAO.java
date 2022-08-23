@@ -65,6 +65,22 @@ public class OrderLineItemDAO implements Dao<OrderLineItem> {
 		return null;
 	}
 	
+	public List<OrderLineItem> readByOrderId(Long orderId) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM order_line_items WHERE order_id = ?");) {
+			List<OrderLineItem> orderLineItems = new ArrayList<>();
+			while (resultSet.next()) {
+				orderLineItems.add(modelFromResultSet(resultSet));
+			}
+			return orderLineItems;
+		} catch (SQLException e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return new ArrayList<>();
+	}
+	
 	public OrderLineItem readLatest() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
