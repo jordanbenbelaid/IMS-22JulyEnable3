@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import com.qa.ims.persistence.dao.CustomerDAO;
 import com.qa.ims.persistence.dao.OrderDAO;
 import com.qa.ims.persistence.domain.Customer;
+import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.utils.Utils;
 
@@ -25,8 +26,11 @@ public class OrderController implements CrudController<Order> {
 
 	@Override
 	public List<Order> readAll() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Order> orders = orderDAO.readAll();
+		for (Order order : orders) {
+			LOGGER.info(order);
+		}
+		return orders;
 	}
 
 	@Override
@@ -44,14 +48,24 @@ public class OrderController implements CrudController<Order> {
 
 	@Override
 	public Order update() {
-		// TODO Auto-generated method stub
-		return null;
+		CustomerDAO custDAO = new CustomerDAO();
+		LOGGER.info("Please enter the id of the order you would like to update");
+		Long id = utils.getLong();
+		LOGGER.info("Please enter an order number");
+		String orderNumber = utils.getString();
+		LOGGER.info("Please enter a customer id");
+		Long customerId = utils.getLong();
+		Customer customer = custDAO.read(customerId);
+		Order order = orderDAO.update(new Order(id, orderNumber, customer));
+		LOGGER.info("Order updated");
+		return order;
 	}
 
 	@Override
 	public int delete() {
-		// TODO Auto-generated method stub
-		return 0;
+		LOGGER.info("Please enter the id of the order you would like to delete");
+		Long id = utils.getLong();
+		return orderDAO.delete(id);
 	}
 
 }
