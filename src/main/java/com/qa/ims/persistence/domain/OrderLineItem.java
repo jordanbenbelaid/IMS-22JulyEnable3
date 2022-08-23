@@ -6,16 +6,19 @@ public class OrderLineItem {
 	private Long id;
 	private Item item;
 	private Long quantity;
+	private Long orderId;
 	
-	public OrderLineItem(Item item, Long quantity) {
+	public OrderLineItem(Item item, Long quantity, Long orderId) {
 		this.item = item;
 		this.quantity = quantity;
+		this.orderId = orderId;
 	}
 
-	public OrderLineItem(Long id, Item item, Long quantity) {
+	public OrderLineItem(Long id, Item item, Long quantity, Long orderId) {
 		this.id = id;
 		this.item = item;
 		this.quantity = quantity;
+		this.orderId = orderId;
 	}
 
 	public Long getId() {
@@ -42,6 +45,14 @@ public class OrderLineItem {
 		this.quantity = quantity;
 	}
 
+	public Long getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(Long orderId) {
+		this.orderId = orderId;
+	}
+
 	@Override
 	public String toString() {
 		return "id: " + id + " item: " + item + " quantity: " + quantity;
@@ -49,7 +60,7 @@ public class OrderLineItem {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, item, quantity);
+		return Objects.hash(id, item, orderId, quantity);
 	}
 
 	@Override
@@ -62,7 +73,7 @@ public class OrderLineItem {
 			return false;
 		OrderLineItem other = (OrderLineItem) obj;
 		return Objects.equals(id, other.id) && Objects.equals(item, other.item)
-				&& Objects.equals(quantity, other.quantity);
+				&& Objects.equals(orderId, other.orderId) && Objects.equals(quantity, other.quantity);
 	}
 
 }
