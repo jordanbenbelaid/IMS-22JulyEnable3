@@ -20,8 +20,11 @@ public class ItemDAO implements Dao<Item> {
 
 	@Override
 	public Item modelFromResultSet(ResultSet resultSet) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Long id = resultSet.getLong("id");
+		String name = resultSet.getString("name");
+		Double price = resultSet.getDouble("price");
+		Long stock = resultSet.getLong("stock");
+		return new Item(id, name, price, stock);
 	}
 	
 	@Override
