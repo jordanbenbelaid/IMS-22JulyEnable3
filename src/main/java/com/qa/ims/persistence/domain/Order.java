@@ -1,11 +1,14 @@
 package com.qa.ims.persistence.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Order {
 	private Long id;
 	private String orderNumber;
 	private Customer customer;
+	private List<OrderLineItem> orderLineItems = new ArrayList<>();
 	
 	public Order(String orderNumber, Customer customer) {
 		this.orderNumber = orderNumber;
@@ -40,6 +43,10 @@ public class Order {
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
+	}
+	
+	public void addOrderLineItem(OrderLineItem orderLineItem) {
+		this.orderLineItems.add(orderLineItem);
 	}
 
 	@Override
