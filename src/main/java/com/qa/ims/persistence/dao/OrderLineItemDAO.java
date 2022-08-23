@@ -4,11 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.persistence.domain.OrderLineItem;
 import com.qa.ims.utils.DBUtils;
 
@@ -31,6 +33,19 @@ public class OrderLineItemDAO implements Dao<OrderLineItem> {
 	@Override
 	public OrderLineItem read(Long id) {
 		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public OrderLineItem readLatest() {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM order_line_items ORDER BY id DESC LIMIT 1");) {
+			resultSet.next();
+			return modelFromResultSet(resultSet);
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
 		return null;
 	}
 
