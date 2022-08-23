@@ -23,8 +23,11 @@ public class ItemController implements CrudController<Item> {
 
 	@Override
 	public List<Item> readAll() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Item> items = itemDAO.readAll();
+		for (Item item : items) {
+			LOGGER.info(item);
+		}
+		return items;
 	}
 
 	@Override
@@ -32,9 +35,9 @@ public class ItemController implements CrudController<Item> {
 		LOGGER.info("Please enter an item name");
 		String name = utils.getString();
 		LOGGER.info("Please enter a price, input should be numerical without symbols");
-		double price = utils.getDouble();
+		Double price = utils.getDouble();
 		LOGGER.info("Please enter how many are in stock");
-		long stock = utils.getLong();
+		Long stock = utils.getLong();
 		Item item = itemDAO.create(new Item(name, price, stock));
 		LOGGER.info("Item created");
 		return item;
@@ -42,14 +45,24 @@ public class ItemController implements CrudController<Item> {
 
 	@Override
 	public Item update() {
-		// TODO Auto-generated method stub
-		return null;
+		LOGGER.info("Please enter the id of the item you would like to update");
+		Long id = utils.getLong();
+		LOGGER.info("Please enter a name");
+		String name = utils.getString();
+		LOGGER.info("Please enter a price");
+		Double price = utils.getDouble();
+		LOGGER.info("Please enter the number in stock");
+		Long stock = utils.getLong();
+		Item item = itemDAO.update(new Item(id, name, price, stock));
+		LOGGER.info("Item updated");
+		return item;
 	}
 
 	@Override
 	public int delete() {
-		// TODO Auto-generated method stub
-		return 0;
+		LOGGER.info("Please enter the id of the item you would like to delete");
+		Long id = utils.getLong();
+		return itemDAO.delete(id);
 	}
 
 
