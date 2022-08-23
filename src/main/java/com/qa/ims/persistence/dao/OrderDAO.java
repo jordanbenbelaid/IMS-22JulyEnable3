@@ -54,7 +54,7 @@ public class OrderDAO implements Dao<Order> {
 				PreparedStatement statement = connection
 						.prepareStatement("INSERT INTO orders(order_number, customer_id) VALUES (?,?)");) {
 			statement.setString(1, order.getOrderNumber());
-			statement.setLong(1, order.getCustomer().getId());
+			statement.setLong(2, order.getCustomer().getId());
 			statement.executeUpdate();
 			return readLatest();
 		} catch (Exception e) {
