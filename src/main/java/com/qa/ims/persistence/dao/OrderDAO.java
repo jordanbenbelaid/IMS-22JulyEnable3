@@ -11,6 +11,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.utils.DBUtils;
@@ -21,8 +22,12 @@ public class OrderDAO implements Dao<Order> {
 
 	@Override
 	public Order modelFromResultSet(ResultSet resultSet) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		CustomerDAO custDAO = new CustomerDAO();
+		Long id = resultSet.getLong("id");
+		String orderNumber = resultSet.getString("order_number");
+		Long customerId = resultSet.getLong("customer_id");
+		Customer customer = custDAO.read(customerId);
+		return new Order(id, orderNumber, customer);
 	}
 	
 	@Override
