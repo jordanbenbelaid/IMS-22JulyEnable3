@@ -51,7 +51,7 @@ public class Order {
 
 	@Override
 	public String toString() {
-		return "id: " + id + " orderNumber: " + orderNumber + " customer: " + customer;
+		return "id: " + id + " orderNumber: " + orderNumber + " customer: " + customer + " items: " + orderLineItems;
 	}
 
 	@Override
