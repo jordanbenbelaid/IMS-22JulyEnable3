@@ -78,6 +78,9 @@ public class IMS {
 
 			if (action == Action.RETURN) {
 				changeDomain = true;
+			} else if(action == Action.UPDATE && domain == Domain.ORDER) {
+				LOGGER.info("This is a test");
+				
 			} else {
 				doAction(active, action);
 			}
