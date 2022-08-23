@@ -7,6 +7,7 @@ import com.qa.ims.controller.Action;
 import com.qa.ims.controller.CrudController;
 import com.qa.ims.controller.CustomerController;
 import com.qa.ims.controller.ItemController;
+import com.qa.ims.controller.OrderAction;
 import com.qa.ims.controller.OrderController;
 import com.qa.ims.persistence.dao.CustomerDAO;
 import com.qa.ims.persistence.dao.ItemDAO;
@@ -79,12 +80,26 @@ public class IMS {
 			if (action == Action.RETURN) {
 				changeDomain = true;
 			} else if(action == Action.UPDATE && domain == Domain.ORDER) {
-				LOGGER.info("This is a test");
+				selectOrderAction();
 				
 			} else {
 				doAction(active, action);
 			}
 		} while (!changeDomain);
+	}
+	
+	private void selectOrderAction() {
+		CrudController<?> active = this.orders;
+		LOGGER.info("How would you like to update the Order");
+		
+		OrderAction.printOrderActions();
+		OrderAction action = OrderAction.getAction(utils);
+		
+		if (action == OrderAction.UPDATE) {
+			doAction(active, Action.UPDATE);
+		} else {
+			this.orders.addItem();
+		}
 	}
 
 	public void doAction(CrudController<?> crudController, Action action) {
