@@ -10,8 +10,6 @@ CREATE TABLE IF NOT EXISTS `ims`.`customers` (
     `surname` VARCHAR(40) DEFAULT NULL,
     PRIMARY KEY (`id`)
 );
-<<<<<<< Updated upstream
-=======
 
 CREATE TABLE IF NOT EXISTS items (
 `id` INT NOT NULL AUTO_INCREMENT,
@@ -26,4 +24,11 @@ CREATE TABLE IF NOT EXISTS orders (
 PRIMARY KEY (`id`),
 FOREIGN KEY (`customer_id`) REFERENCES `customers`(`id`)
 );
->>>>>>> Stashed changes
+
+CREATE TABLE IF NOT EXISTS orders_items (
+`order_id` INT NOT NULL,
+`item_id` INT NOT NULL,
+quantity INT NOT NULL,
+FOREIGN KEY (`order_id`) REFERENCES `orders`(`id`),
+FOREIGN KEY (`item_id`) REFERENCES `items`(`id`)
+);
