@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS `ims`.`orders` (
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`order_number` VARCHAR(16) UNIQUE,
 	`customer_id` INT NOT NULL,
+	`order_total` DECIMAL(8, 2) DEFAULT 0.00,
 	PRIMARY KEY (`id`),
 	FOREIGN KEY (`customer_id`) REFERENCES `ims`.`customers` (`id`)
 );

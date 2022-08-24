@@ -9,7 +9,7 @@ public class Order {
 	private String orderNumber;
 	private Customer customer;
 	private List<OrderLineItem> orderLineItems = new ArrayList<>();
-	private Double orderTotal;
+	private Double orderTotal = 0.00d;
 	
 	public Order(String orderNumber, Customer customer) {
 		this.orderNumber = orderNumber;
