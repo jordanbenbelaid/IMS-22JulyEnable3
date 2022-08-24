@@ -4,30 +4,18 @@ import java.util.Objects;
 
 public class OrdersItems {
 
-	private Long orderId;
-	private Long itemId;
-	private Long quantity;
 	
-	public OrdersItems(Long orderId, Long itemId, Long quantity) {
-		this.setOrderId(orderId);
+	private Long quantity;
+	private Long id;
+	private Long itemId;
+	
+	
+
+	public OrdersItems(Long id, Long itemId, Long quantity) {
+		super();
+		this.setId(id);
 		this.setItemId(itemId);
 		this.setQuantity(quantity);
-	}
-
-	public Long getOrderId() {
-		return orderId;
-	}
-
-	public void setOrderId(Long orderId) {
-		this.orderId = orderId;
-	}
-
-	public Long getItemId() {
-		return itemId;
-	}
-
-	public void setItemId(Long itemId) {
-		this.itemId = itemId;
 	}
 
 	public Long getQuantity() {
@@ -38,22 +26,20 @@ public class OrdersItems {
 		this.quantity = quantity;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(itemId, orderId, quantity);
+	public Long getId() {
+		return id;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		OrdersItems other = (OrdersItems) obj;
-		return Objects.equals(itemId, other.itemId) && Objects.equals(orderId, other.orderId)
-				&& Objects.equals(quantity, other.quantity);
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getItemId() {
+		return itemId;
+	}
+
+	public void setItemId(Long itemId) {
+		this.itemId = itemId;
 	}
 	
 	

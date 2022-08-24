@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 import com.qa.ims.persistence.domain.Orders;
 import com.qa.ims.utils.DBUtils;
 
-public class OrdersDAO implements Dao<Orders> {
+public class OrdersDAO implements Dao<Orders>{
 
 	public static final Logger LOGGER = LogManager.getLogger();
 
@@ -120,6 +120,7 @@ public class OrdersDAO implements Dao<Orders> {
 		return 0;
 	}
 
+	
 	
 	
 }

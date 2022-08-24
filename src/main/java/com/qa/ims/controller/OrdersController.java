@@ -1,20 +1,27 @@
 package com.qa.ims.controller;
 
 import java.util.List;
+import java.util.Scanner;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.qa.ims.persistence.dao.OrdersDAO;
+import com.qa.ims.persistence.dao.OrdersItemsDAO;
 import com.qa.ims.persistence.domain.Orders;
+import com.qa.ims.persistence.domain.OrdersItems;
 import com.qa.ims.utils.Utils;
 
 public class OrdersController implements CrudController<Orders> {
 
 	public static final Logger LOGGER = LogManager.getLogger();
+	Scanner scan = new Scanner(System.in);
+	OrdersItemsDAO oi = new OrdersItemsDAO();
 	
 	private OrdersDAO ordersDAO;
 	private Utils utils;
+	private OrdersItemsDAO ordersItemsDAO;
+	private OrdersItems ordersItems;
 	
 	public OrdersController(OrdersDAO ordersDAO, Utils utils) {
 		super();
@@ -38,7 +45,18 @@ public class OrdersController implements CrudController<Orders> {
 		LOGGER.info("Please enter the id of the customer placing the order");
 		Long customerId = utils.getLong();
 		Orders orders = ordersDAO.create(new Orders(customerId));
-		LOGGER.info("Order created");
+		LOGGER.info("Would you like to add details to this order? Y/N?");
+		String details = scan.nextLine();
+		if(details.equalsIgnoreCase("y")) {
+				LOGGER.info("Please enter the id of the item you would like to order");
+				Long itemId = utils.getLong();
+				LOGGER.info("Please enter the quanitity you would like of this item");
+				Long quantity = utils.getLong();
+				OrdersItems ordersItems = oi.create(new OrdersItems(orders.getId(), itemId , quantity));
+				LOGGER.info("Your order has been created");
+			} else { 
+				LOGGER.info("Your order has been created without any details");
+			}
 		return orders;
 	}
 

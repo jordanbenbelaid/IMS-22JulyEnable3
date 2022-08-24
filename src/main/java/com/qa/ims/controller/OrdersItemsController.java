@@ -15,7 +15,14 @@ public class OrdersItemsController implements CrudController<OrdersItems>{
 	
 	private OrdersItemsDAO ordersItemsDAO;
 	private Utils utils;
+
 	
+	public OrdersItemsController(OrdersItemsDAO ordersItemsDAO, Utils utils) {
+		super();
+		this.ordersItemsDAO = ordersItemsDAO;
+		this.utils = utils;
+	}
+
 	@Override
 	public List<OrdersItems> readAll() {
 		List<OrdersItems> ordersItems = ordersItemsDAO.readAll();
