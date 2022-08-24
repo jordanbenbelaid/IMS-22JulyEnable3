@@ -32,9 +32,14 @@ public class CustomerController implements CrudController<Customer> {
 	@Override
 	public List<Customer> readAll() {
 		List<Customer> customers = customerDAO.readAll();
-		for (Customer customer : customers) {
-			LOGGER.info(customer);
+		if(customers.size() > 0) {
+			for (Customer customer : customers) {
+				LOGGER.info(customer);
+			}
+		} else {
+			LOGGER.info("There are currently no customers in the system");
 		}
+		
 		return customers;
 	}
 
@@ -64,7 +69,9 @@ public class CustomerController implements CrudController<Customer> {
 		LOGGER.info("Please enter a surname");
 		String surname = utils.getString();
 		Customer customer = customerDAO.update(new Customer(id, firstName, surname));
-		LOGGER.info("Customer Updated");
+		if (customer != null) {
+			LOGGER.info("Customer Updated");
+		}
 		return customer;
 	}
 

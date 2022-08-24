@@ -21,6 +21,10 @@ public class OrderLineItemDAO implements Dao<OrderLineItem> {
 	
 	public static final Logger LOGGER = LogManager.getLogger();
 	
+	
+	/**
+	 * Creates an OrderLineItem instance from the result set
+	 */
 	@Override
 	public OrderLineItem modelFromResultSet(ResultSet resultSet) throws SQLException {
 		ItemDAO itemDAO = new ItemDAO();
@@ -32,6 +36,10 @@ public class OrderLineItemDAO implements Dao<OrderLineItem> {
 		return new OrderLineItem(id, item, quantity, orderId);
 	}
 
+	
+	/**
+	 * Reads all OrderLineItems from the database
+	 */
 	@Override
 	public List<OrderLineItem> readAll() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -49,6 +57,10 @@ public class OrderLineItemDAO implements Dao<OrderLineItem> {
 		return new ArrayList<>();
 	}
 
+	
+	/**
+	 * Reads an OrderLineItem from the database using the id
+	 */
 	@Override
 	public OrderLineItem read(Long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -65,6 +77,9 @@ public class OrderLineItemDAO implements Dao<OrderLineItem> {
 		return null;
 	}
 	
+	/**
+	 * Reads an OrderLineItem from the database using the order id
+	 */
 	public List<OrderLineItem> readByOrderId(Long orderId) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection.prepareStatement("SELECT * FROM order_line_items WHERE order_id = ?");) {
@@ -83,14 +98,20 @@ public class OrderLineItemDAO implements Dao<OrderLineItem> {
 		return new ArrayList<>();
 	}
 	
+	/**
+	 * Reads OrderLineItems from the database using the order and item ids
+	 */
 	public OrderLineItem readByOrderItem(Long orderId, Long itemId) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection.prepareStatement("SELECT * FROM order_line_items WHERE order_id = ? AND item_id = ?");) {
 			statement.setLong(1, orderId);
 			statement.setLong(2, itemId);
 			try (ResultSet resultSet = statement.executeQuery();) {
-				resultSet.next();
-				return modelFromResultSet(resultSet);
+				if (resultSet.next()) {
+					resultSet.beforeFirst();
+					resultSet.next();
+					return modelFromResultSet(resultSet);
+				}
 			}
 		} catch (Exception e) {
 			LOGGER.debug(e);
@@ -99,6 +120,10 @@ public class OrderLineItemDAO implements Dao<OrderLineItem> {
 		return null;
 	}
 	
+	
+	/**
+	 * Reads the last created OrderLineItem from the database
+	 */
 	public OrderLineItem readLatest() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
@@ -112,6 +137,9 @@ public class OrderLineItemDAO implements Dao<OrderLineItem> {
 		return null;
 	}
 
+	/**
+	 * Creates an OrederLineItem in the database
+	 */
 	@Override
 	public OrderLineItem create(OrderLineItem orderLineItem) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -129,6 +157,10 @@ public class OrderLineItemDAO implements Dao<OrderLineItem> {
 		return null;
 	}
 
+	
+	/**
+	 * Updates an OrederLineItem in the database
+	 */
 	@Override
 	public OrderLineItem update(OrderLineItem orderLineItem) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -148,6 +180,9 @@ public class OrderLineItemDAO implements Dao<OrderLineItem> {
 
 	}
 
+	/**
+	 * Deletes an OrderLineItem from the database
+	 */
 	@Override
 	public int delete(long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();

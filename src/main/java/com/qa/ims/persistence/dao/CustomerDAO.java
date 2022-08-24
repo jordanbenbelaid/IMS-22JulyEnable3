@@ -18,12 +18,22 @@ public class CustomerDAO implements Dao<Customer> {
 
 	public static final Logger LOGGER = LogManager.getLogger();
 
+	/**
+	 * Creates a Customer instance from the result set
+	 */
 	@Override
-	public Customer modelFromResultSet(ResultSet resultSet) throws SQLException {
-		Long id = resultSet.getLong("id");
-		String firstName = resultSet.getString("first_name");
-		String surname = resultSet.getString("surname");
-		return new Customer(id, firstName, surname);
+	public Customer modelFromResultSet(ResultSet resultSet) {
+		try {
+			Long id = resultSet.getLong("id");
+			String firstName = resultSet.getString("first_name");
+			String surname = resultSet.getString("surname");
+			return new Customer(id, firstName, surname);
+		} catch(SQLException e) {
+			LOGGER.debug(e);
+			LOGGER.info("Customer does not exist");
+			return null;
+		}
+		
 	}
 
 	/**
@@ -48,6 +58,10 @@ public class CustomerDAO implements Dao<Customer> {
 		return new ArrayList<>();
 	}
 
+	
+	/**
+	 * Reads the last created item from the database
+	 */
 	public Customer readLatest() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
@@ -82,6 +96,10 @@ public class CustomerDAO implements Dao<Customer> {
 		return null;
 	}
 
+	
+	/**
+	 * Reads a customer from the database using the id
+	 */
 	@Override
 	public Customer read(Long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
