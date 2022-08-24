@@ -80,6 +80,19 @@ public class OrderController implements CrudController<Order> {
 		LOGGER.info(item.getName() + " added");
 		return order;
 	}
+	
+	public Order removeItem() {
+		ItemDAO itemDAO = new ItemDAO();
+		OrderLineItemDAO lineItemDAO = new OrderLineItemDAO();
+		LOGGER.info("Please enter the order id");
+		Long orderId = utils.getLong();
+		Order order = orderDAO.read(orderId);
+		LOGGER.info("Please enter the id of the item to remove");
+		Long itemId = utils.getLong();
+		Item item = itemDAO.read(itemId);
+		OrderLineItem lineItem = lineItemDAO.readByOrderAndItem(order.getId(), item.getId());
+		return lineItemDAO.delete(lineItem.getId());
+	}
 
 	@Override
 	public int delete() {
