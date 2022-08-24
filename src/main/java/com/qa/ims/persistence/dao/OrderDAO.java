@@ -64,9 +64,17 @@ public class OrderDAO implements Dao<Order> {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection.prepareStatement("SELECT * FROM orders WHERE id = ?");) {
 			statement.setLong(1, id);
+			OrderLineItemDAO lineItemDAO = new OrderLineItemDAO();
 			try (ResultSet resultSet = statement.executeQuery();) {
 				resultSet.next();
-				return modelFromResultSet(resultSet);
+				Order order = modelFromResultSet(resultSet);
+				List<OrderLineItem> lineItems = lineItemDAO.readByOrderId(order.getId());
+				if(lineItems.size() > 0) {
+					for(OrderLineItem lineItem : lineItems) {
+						order.addOrderLineItem(lineItem);
+					}
+				}
+				return order;
 			}
 		} catch (Exception e) {
 			LOGGER.debug(e);
@@ -108,10 +116,11 @@ public class OrderDAO implements Dao<Order> {
 	public Order update(Order order) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection
-						.prepareStatement("UPDATE orders SET order_number = ?, customer_id = ? WHERE id = ?");) {
+						.prepareStatement("UPDATE orders SET order_number = ?, customer_id = ?, order_total = ? WHERE id = ?");) {
 			statement.setString(1, order.getOrderNumber());
 			statement.setLong(2, order.getCustomer().getId());
-			statement.setLong(3, order.getId());
+			statement.setDouble(3, order.getOrderTotal());
+			statement.setLong(4, order.getId());
 			statement.executeUpdate();
 			return read(order.getId());
 		} catch (Exception e) {
