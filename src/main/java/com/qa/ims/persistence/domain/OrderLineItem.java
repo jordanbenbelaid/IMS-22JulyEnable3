@@ -55,7 +55,7 @@ public class OrderLineItem {
 
 	@Override
 	public String toString() {
-		return " name: " + item.getName() + " quantity: " + quantity;
+		return "name: " + item.getName() + " quantity: " + quantity;
 	}
 
 }
