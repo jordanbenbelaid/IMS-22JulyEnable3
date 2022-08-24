@@ -81,7 +81,7 @@ public class OrderController implements CrudController<Order> {
 		return order;
 	}
 	
-	public Order removeItem() {
+	public int removeItem() {
 		ItemDAO itemDAO = new ItemDAO();
 		OrderLineItemDAO lineItemDAO = new OrderLineItemDAO();
 		LOGGER.info("Please enter the order id");
@@ -90,7 +90,7 @@ public class OrderController implements CrudController<Order> {
 		LOGGER.info("Please enter the id of the item to remove");
 		Long itemId = utils.getLong();
 		Item item = itemDAO.read(itemId);
-		OrderLineItem lineItem = lineItemDAO.readByOrderAndItem(order.getId(), item.getId());
+		OrderLineItem lineItem = lineItemDAO.readByOrderItem(order.getId(), item.getId());
 		return lineItemDAO.delete(lineItem.getId());
 	}
 
