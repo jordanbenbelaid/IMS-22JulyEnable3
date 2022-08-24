@@ -83,6 +83,22 @@ public class OrderLineItemDAO implements Dao<OrderLineItem> {
 		return new ArrayList<>();
 	}
 	
+	public OrderLineItem readByOrderItem(Long orderId, Long itemId) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				PreparedStatement statement = connection.prepareStatement("SELECT * FROM order_line_items WHERE order_id = ? AND item_id = ?");) {
+			statement.setLong(1, orderId);
+			statement.setLong(2, itemId);
+			try (ResultSet resultSet = statement.executeQuery();) {
+				resultSet.next();
+				return modelFromResultSet(resultSet);
+			}
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return null;
+	}
+	
 	public OrderLineItem readLatest() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
@@ -117,10 +133,11 @@ public class OrderLineItemDAO implements Dao<OrderLineItem> {
 	public OrderLineItem update(OrderLineItem orderLineItem) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection
-						.prepareStatement("UPDATE order_line_items SET item_id = ?, quantity = ?, order_id = ?, WHERE id = ?");) {
+						.prepareStatement("UPDATE order_line_items SET item_id = ?, quantity = ?, order_id = ? WHERE id = ?");) {
 			statement.setLong(1, orderLineItem.getItem().getId());
 			statement.setLong(2, orderLineItem.getQuantity());
 			statement.setLong(3, orderLineItem.getOrderId());
+			statement.setLong(4, orderLineItem.getId());
 			statement.executeUpdate();
 			return read(orderLineItem.getId());
 		} catch (Exception e) {
@@ -133,7 +150,14 @@ public class OrderLineItemDAO implements Dao<OrderLineItem> {
 
 	@Override
 	public int delete(long id) {
-		// TODO Auto-generated method stub
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				PreparedStatement statement = connection.prepareStatement("DELETE FROM order_line_items WHERE id = ?");) {
+			statement.setLong(1, id);
+			return statement.executeUpdate();
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
 		return 0;
 	}
 

@@ -95,11 +95,30 @@ public class IMS {
 		OrderAction.printOrderActions();
 		OrderAction action = OrderAction.getAction(utils);
 		
-		if (action == OrderAction.UPDATE) {
+		switch (action) {
+		case UPDATE:
 			doAction(active, Action.UPDATE);
-		} else {
+			break;
+		case ADD:
 			this.orders.addItem();
+			break;
+		case REMOVE:
+			this.orders.removeItem();
+			break;
+		case RETURN:
+			
+			break;
+		default:
+			break;
 		}
+		
+//		if (action == OrderAction.UPDATE) {
+//			doAction(active, Action.UPDATE);
+//		} else if(action == OrderAction.ADD) {
+//			this.orders.addItem();
+//		} else {
+//			this.orders.removeItem();
+//		}
 	}
 
 	public void doAction(CrudController<?> crudController, Action action) {

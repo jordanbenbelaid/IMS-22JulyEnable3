@@ -48,6 +48,10 @@ public class Order {
 	public void addOrderLineItem(OrderLineItem orderLineItem) {
 		this.orderLineItems.add(orderLineItem);
 	}
+	
+	public void removeOrderLineItem(OrderLineItem orderLineItem) {
+		this.orderLineItems.remove(orderLineItem);
+	}
 
 	@Override
 	public String toString() {
