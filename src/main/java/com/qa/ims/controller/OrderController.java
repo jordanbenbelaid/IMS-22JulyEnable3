@@ -16,9 +16,9 @@ import com.qa.ims.persistence.domain.OrderLineItem;
 import com.qa.ims.utils.Utils;
 
 public class OrderController implements CrudController<Order> {
-	
+
 	public static final Logger LOGGER = LogManager.getLogger();
-	
+
 	private OrderDAO orderDAO;
 	private Utils utils;
 
@@ -37,7 +37,7 @@ public class OrderController implements CrudController<Order> {
 		} else {
 			LOGGER.info("There are currently no orders in the system");
 		}
-		
+
 		return orders;
 	}
 
@@ -71,82 +71,70 @@ public class OrderController implements CrudController<Order> {
 			}
 			return order;
 		}
-		
+
 		return null;
-		
+
 	}
-	
+
 	public Order addItem() {
 		ItemDAO itemDAO = new ItemDAO();
 		OrderLineItemController lineItemController = new OrderLineItemController();
-		Item item;
-		Long orderId;
-		Long itemId;
-		Long quantity;
-		while (true) {
-				LOGGER.info("Please enter the order id");
-				orderId = utils.getLong();
-				LOGGER.info("Please enter the item id");
-				itemId = utils.getLong();
-				LOGGER.info("Please enter the item quantity");
-				quantity = utils.getLong();
-				item = itemDAO.read(itemId);
-				Order order = orderDAO.read(orderId);
-				if (item != null && order != null) {
-					break;
-				} else {
-					LOGGER.info("Some information you entered is incorrect, please try again");
-					continue;
-				}	
+
+		LOGGER.info("Please enter the order id");
+		Long orderId = utils.getLong();
+		LOGGER.info("Please enter the item id");
+		Long itemId = utils.getLong();
+		LOGGER.info("Please enter the item quantity");
+		Long quantity = utils.getLong();
+		Item item = itemDAO.read(itemId);
+		Order order = orderDAO.read(orderId);
+		if (item != null && order != null) {
+			lineItemController.addToOrder(item, orderId, itemId, quantity);
+			Order updatedOrder = calculateTotal(orderId);
+			LOGGER.info(quantity + " of " + item.getName() + " added");
+			return updatedOrder;
+		} else {
+			LOGGER.info("Some information you entered is incorrect, please try again");
+			return null;
 		}
-		lineItemController.addToOrder(item, orderId, itemId, quantity);
-		Order order = calculateTotal(orderId);
-		LOGGER.info(quantity + " of " + item.getName() + " added");
-		return order;
+
 	}
-	
+
 	public Order removeItem() {
 		OrderLineItemDAO lineItemDAO = new OrderLineItemDAO();
 		ItemDAO itemDAO = new ItemDAO();
-		OrderLineItem lineItem;
-		Item item;
-		Long orderId;
-		while (true) {
-			LOGGER.info("Please enter the order id");
-			orderId = utils.getLong();
-			LOGGER.info("Please enter the id of the item to remove");
-			Long itemId = utils.getLong();
-			item = itemDAO.read(itemId);
-			Order order = orderDAO.read(orderId);
-			if (item == null || order == null) {
-				LOGGER.info("Some information you entered is incorrect, please try again");
-				continue;
+
+		LOGGER.info("Please enter the order id");
+		Long orderId = utils.getLong();
+		LOGGER.info("Please enter the id of the item to remove");
+		Long itemId = utils.getLong();
+		Item item = itemDAO.read(itemId);
+		Order order = orderDAO.read(orderId);
+		if (item == null || order == null) {
+			LOGGER.info("Some information you entered is incorrect, please try again");
+			return null;
+		} else {
+			OrderLineItem lineItem = lineItemDAO.readByOrderItem(orderId, itemId);
+			if (lineItem != null) {
+				lineItemDAO.delete(lineItem.getId());
+				item.updateStock(lineItem.getQuantity());
+				itemDAO.update(item);
+				Order updatedOrder = calculateTotal(orderId);
+				return updatedOrder;
 			} else {
-				lineItem = lineItemDAO.readByOrderItem(orderId, itemId);
-				if (lineItem != null) {
-					break;
-				} else {
-					LOGGER.info("This order does not contain the selected item.");
-					continue;
-				}
-				
+				LOGGER.info("This order does not contain the selected item.");
+				return null;
 			}
-			
 		}
-		
-		lineItemDAO.delete(lineItem.getId());
-		item.updateStock(lineItem.getQuantity());
-		itemDAO.update(item);
-		Order order = calculateTotal(orderId);
-		return order;
+
 	}
-	
+
 	public Order calculateTotal(Long orderId) {
 		Order selectedOrder = orderDAO.read(orderId);
 		Order revisedOrder = orderDAO.update(selectedOrder);
-		
+
 		return revisedOrder;
-		
+
 	}
 
 	@Override
