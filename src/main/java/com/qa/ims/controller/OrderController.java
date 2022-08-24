@@ -30,9 +30,14 @@ public class OrderController implements CrudController<Order> {
 	@Override
 	public List<Order> readAll() {
 		List<Order> orders = orderDAO.readAll();
-		for (Order order : orders) {
-			LOGGER.info(order);
+		if (orders.size() > 0) {
+			for (Order order : orders) {
+				LOGGER.info(order);
+			}
+		} else {
+			LOGGER.info("There are currently no orders in the system");
 		}
+		
 		return orders;
 	}
 

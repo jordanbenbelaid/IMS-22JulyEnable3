@@ -24,9 +24,14 @@ public class ItemController implements CrudController<Item> {
 	@Override
 	public List<Item> readAll() {
 		List<Item> items = itemDAO.readAll();
-		for (Item item : items) {
-			LOGGER.info(item);
+		if (items.size() > 0) {
+			for (Item item : items) {
+				LOGGER.info(item);
+			}
+		} else {
+			LOGGER.info("There are currently no items in the system");
 		}
+		
 		return items;
 	}
 

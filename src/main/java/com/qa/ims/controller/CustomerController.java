@@ -32,9 +32,14 @@ public class CustomerController implements CrudController<Customer> {
 	@Override
 	public List<Customer> readAll() {
 		List<Customer> customers = customerDAO.readAll();
-		for (Customer customer : customers) {
-			LOGGER.info(customer);
+		if(customers.size() > 0) {
+			for (Customer customer : customers) {
+				LOGGER.info(customer);
+			}
+		} else {
+			LOGGER.info("There are currently no customers in the system");
 		}
+		
 		return customers;
 	}
 
