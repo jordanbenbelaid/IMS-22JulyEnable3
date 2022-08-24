@@ -89,8 +89,11 @@ public class OrderLineItemDAO implements Dao<OrderLineItem> {
 			statement.setLong(1, orderId);
 			statement.setLong(2, itemId);
 			try (ResultSet resultSet = statement.executeQuery();) {
-				resultSet.next();
-				return modelFromResultSet(resultSet);
+				if (resultSet.next()) {
+					resultSet.beforeFirst();
+					resultSet.next();
+					return modelFromResultSet(resultSet);
+				}
 			}
 		} catch (Exception e) {
 			LOGGER.debug(e);
