@@ -82,7 +82,7 @@ public class OrderController implements CrudController<Order> {
 		} else {
 			lineItem = lineItemDAO.create(new OrderLineItem(item, quantity, orderId));
 		}
-		LOGGER.info(lineItem.getQuantity() + " of " + lineItem.getItem().getName() + " added");
+		LOGGER.info(quantity + " of " + lineItem.getItem().getName() + " added");
 		return lineItem;
 	}
 	

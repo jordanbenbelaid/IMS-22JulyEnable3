@@ -133,10 +133,11 @@ public class OrderLineItemDAO implements Dao<OrderLineItem> {
 	public OrderLineItem update(OrderLineItem orderLineItem) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection
-						.prepareStatement("UPDATE order_line_items SET item_id = ?, quantity = ?, order_id = ?, WHERE id = ?");) {
+						.prepareStatement("UPDATE order_line_items SET item_id = ?, quantity = ?, order_id = ? WHERE id = ?");) {
 			statement.setLong(1, orderLineItem.getItem().getId());
 			statement.setLong(2, orderLineItem.getQuantity());
 			statement.setLong(3, orderLineItem.getOrderId());
+			statement.setLong(4, orderLineItem.getId());
 			statement.executeUpdate();
 			return read(orderLineItem.getId());
 		} catch (Exception e) {

@@ -7,7 +7,7 @@ import com.qa.ims.utils.Utils;
 
 public enum OrderAction {
 	ADD("To add an item to the order"), REMOVE("To remove and item from the order"),
-	UPDATE("To change the order information");
+	UPDATE("To change the order information"), RETURN("To return to order options");
 	
 	public static final Logger LOGGER = LogManager.getLogger();
 	
