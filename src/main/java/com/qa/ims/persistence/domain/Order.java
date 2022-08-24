@@ -9,6 +9,7 @@ public class Order {
 	private String orderNumber;
 	private Customer customer;
 	private List<OrderLineItem> orderLineItems = new ArrayList<>();
+	private Double orderTotal;
 	
 	public Order(String orderNumber, Customer customer) {
 		this.orderNumber = orderNumber;
@@ -45,6 +46,14 @@ public class Order {
 		this.customer = customer;
 	}
 	
+	public Double getOrderTotal() {
+		return orderTotal;
+	}
+
+	public void setOrderTotal(Double orderTotal) {
+		this.orderTotal = orderTotal;
+	}
+
 	public void addOrderLineItem(OrderLineItem orderLineItem) {
 		this.orderLineItems.add(orderLineItem);
 	}
@@ -55,12 +64,12 @@ public class Order {
 
 	@Override
 	public String toString() {
-		return "id: " + id + " orderNumber: " + orderNumber + " customer: " + customer + " items: " + orderLineItems;
+		return "id: " + id + " orderNumber: " + orderNumber + " customer: " + customer + " items: " + orderLineItems + " total price " + orderTotal;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(customer, id, orderNumber);
+		return Objects.hash(customer, id, orderLineItems, orderNumber, orderTotal);
 	}
 
 	@Override
@@ -73,7 +82,8 @@ public class Order {
 			return false;
 		Order other = (Order) obj;
 		return Objects.equals(customer, other.customer) && Objects.equals(id, other.id)
-				&& Objects.equals(orderNumber, other.orderNumber);
+				&& Objects.equals(orderLineItems, other.orderLineItems)
+				&& Objects.equals(orderNumber, other.orderNumber) && Objects.equals(orderTotal, other.orderTotal);
 	}
 
 }
