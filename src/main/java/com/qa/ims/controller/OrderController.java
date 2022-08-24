@@ -27,6 +27,9 @@ public class OrderController implements CrudController<Order> {
 		this.utils = utils;
 	}
 
+	/**
+	 * Reads all orders to the logger
+	 */
 	@Override
 	public List<Order> readAll() {
 		List<Order> orders = orderDAO.readAll();
@@ -41,6 +44,11 @@ public class OrderController implements CrudController<Order> {
 		return orders;
 	}
 
+	/**
+	 * Creates an order by taking in user input
+	 * Only attempts to create the order if a valid
+	 * customer id has been input.
+	 */
 	@Override
 	public Order create() {
 		CustomerDAO custDAO = new CustomerDAO();
@@ -59,6 +67,12 @@ public class OrderController implements CrudController<Order> {
 		}
 	}
 
+	
+	/**
+	 * Updates an existing order by taking in user input
+	 * Only attempts to update the order if a valid
+	 * customer id has been input.
+	 */
 	@Override
 	public Order update() {
 		CustomerDAO custDAO = new CustomerDAO();
@@ -81,6 +95,13 @@ public class OrderController implements CrudController<Order> {
 
 	}
 
+	
+	/**
+	 * Adds an item to an order.
+	 * Only attempts to create the line item if valid order and customer
+	 * ids have been added. Calls the OrderLineItemController method for
+	 * the database updates. 
+	 */
 	public Order addItem() {
 		ItemDAO itemDAO = new ItemDAO();
 		OrderLineItemController lineItemController = new OrderLineItemController();
@@ -105,6 +126,11 @@ public class OrderController implements CrudController<Order> {
 
 	}
 
+	/**
+	 * Removes an item from an order.
+	 * Only attempts to delete the line item if valid order and customer
+	 * ids have been added. 
+	 */
 	public Order removeItem() {
 		OrderLineItemDAO lineItemDAO = new OrderLineItemDAO();
 		ItemDAO itemDAO = new ItemDAO();
@@ -134,6 +160,12 @@ public class OrderController implements CrudController<Order> {
 
 	}
 
+	/**
+	 * Updates the order total value in the database based on
+	 * the line items.
+	 * The Order class instance total is updated automatically when the order
+	 * is read.
+	 */
 	public Order calculateTotal(Long orderId) {
 		Order selectedOrder = orderDAO.read(orderId);
 		Order revisedOrder = orderDAO.update(selectedOrder);
@@ -142,6 +174,9 @@ public class OrderController implements CrudController<Order> {
 
 	}
 
+	/**
+	 * Deletes an existing order by taking in user input
+	 */
 	@Override
 	public int delete() {
 		LOGGER.info("Please enter the id of the order you would like to delete");

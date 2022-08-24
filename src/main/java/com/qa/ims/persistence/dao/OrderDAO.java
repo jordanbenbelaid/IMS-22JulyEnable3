@@ -21,6 +21,10 @@ public class OrderDAO implements Dao<Order> {
 	
 	public static final Logger LOGGER = LogManager.getLogger();
 
+	
+	/**
+	 * Creates an Order instance from the result set
+	 */
 	@Override
 	public Order modelFromResultSet(ResultSet resultSet) {
 		try {
@@ -38,6 +42,10 @@ public class OrderDAO implements Dao<Order> {
 		
 	}
 	
+	
+	/**
+	 * Reads all orders from the database
+	 */
 	@Override
 	public List<Order> readAll() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -66,6 +74,10 @@ public class OrderDAO implements Dao<Order> {
 		return new ArrayList<>();
 	}
 
+	
+	/**
+	 * Reads an order from the database using the id
+	 */
 	@Override
 	public Order read(Long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -92,6 +104,9 @@ public class OrderDAO implements Dao<Order> {
 		return null;
 	}
 	
+	/**
+	 * Reads the last created order from the database
+	 */
 	public Order readLatest() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
@@ -105,6 +120,10 @@ public class OrderDAO implements Dao<Order> {
 		return null;
 	}
 
+	
+	/**
+	 * Creates an order in the database
+	 */
 	@Override
 	public Order create(Order order) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -121,6 +140,10 @@ public class OrderDAO implements Dao<Order> {
 		return null;
 	}
 
+	
+	/**
+	 * Updates an order in the database
+	 */
 	@Override
 	public Order update(Order order) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -139,6 +162,10 @@ public class OrderDAO implements Dao<Order> {
 		return null;
 	}
 
+	
+	/**
+	 * Deletes an order in the database
+	 */
 	@Override
 	public int delete(long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();

@@ -15,6 +15,10 @@ public class OrderLineItemController {
 	
 	private OrderLineItemDAO lineItemDAO = new OrderLineItemDAO();
 	
+	
+	/**
+	 * Creates an order line item in the database. 
+	 */
 	public OrderLineItem addToOrder(Item item, Long orderId, Long itemId, Long quantity) {
 		ItemDAO itemDAO = new ItemDAO();
 		OrderLineItem currentLineItem = lineItemDAO.readByOrderItem(orderId, itemId);

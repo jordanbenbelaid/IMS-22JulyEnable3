@@ -18,6 +18,10 @@ public class ItemDAO implements Dao<Item> {
 	
 	public static final Logger LOGGER = LogManager.getLogger();
 
+	
+	/**
+	 * Creates an Item instance from the result set
+	 */
 	@Override
 	public Item modelFromResultSet(ResultSet resultSet) {
 		try {
@@ -34,6 +38,10 @@ public class ItemDAO implements Dao<Item> {
 		
 	}
 	
+	
+	/**
+	 * Reads all items from the database
+	 */
 	@Override
 	public List<Item> readAll() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -51,6 +59,10 @@ public class ItemDAO implements Dao<Item> {
 		return new ArrayList<>();
 	}
 
+	
+	/**
+	 * Reads an item from the database using the id
+	 */
 	@Override
 	public Item read(Long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -67,6 +79,10 @@ public class ItemDAO implements Dao<Item> {
 		return null;
 	}
 	
+	
+	/**
+	 * Reads the last created item from the database
+	 */
 	public Item readLatest() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
@@ -80,6 +96,10 @@ public class ItemDAO implements Dao<Item> {
 		return null;
 	}
 
+	
+	/**
+	 * Creates an item in the database
+	 */
 	@Override
 	public Item create(Item item) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -97,6 +117,10 @@ public class ItemDAO implements Dao<Item> {
 		return null;
 	}
 
+	
+	/**
+	 * Updates an item in the database
+	 */
 	@Override
 	public Item update(Item item) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -115,6 +139,10 @@ public class ItemDAO implements Dao<Item> {
 		return null;
 	}
 
+	
+	/**
+	 * Deletes an item in the database
+	 */
 	@Override
 	public int delete(long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();

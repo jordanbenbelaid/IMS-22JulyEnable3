@@ -106,19 +106,11 @@ public class IMS {
 			this.orders.removeItem();
 			break;
 		case RETURN:
-			
 			break;
 		default:
 			break;
 		}
-		
-//		if (action == OrderAction.UPDATE) {
-//			doAction(active, Action.UPDATE);
-//		} else if(action == OrderAction.ADD) {
-//			this.orders.addItem();
-//		} else {
-//			this.orders.removeItem();
-//		}
+	
 	}
 
 	public void doAction(CrudController<?> crudController, Action action) {
