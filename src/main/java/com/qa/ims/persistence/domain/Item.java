@@ -52,6 +52,10 @@ public class Item {
 	public void setStock(Long stock) {
 		this.stock = stock;
 	}
+	
+	public void updateStock(Long stock) {
+		this.stock = this.getStock() + stock;
+	}
 
 	@Override
 	public String toString() {

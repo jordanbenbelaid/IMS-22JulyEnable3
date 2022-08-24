@@ -82,6 +82,8 @@ public class OrderController implements CrudController<Order> {
 		} else {
 			lineItem = lineItemDAO.create(new OrderLineItem(item, quantity, orderId));
 		}
+		item.updateStock(-quantity);
+		itemDAO.update(item);
 		Order order = calculateTotal(orderId);
 		LOGGER.info(quantity + " of " + lineItem.getItem().getName() + " added");
 		return order;
@@ -89,12 +91,16 @@ public class OrderController implements CrudController<Order> {
 	
 	public Order removeItem() {
 		OrderLineItemDAO lineItemDAO = new OrderLineItemDAO();
+		ItemDAO itemDAO = new ItemDAO();
 		LOGGER.info("Please enter the order id");
 		Long orderId = utils.getLong();
 		LOGGER.info("Please enter the id of the item to remove");
 		Long itemId = utils.getLong();
+		Item item = itemDAO.read(itemId);
 		OrderLineItem lineItem = lineItemDAO.readByOrderItem(orderId, itemId);
 		lineItemDAO.delete(lineItem.getId());
+		item.updateStock(lineItem.getQuantity());
+		itemDAO.update(item);
 		Order order = calculateTotal(orderId);
 		return order;
 	}
