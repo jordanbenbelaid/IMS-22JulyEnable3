@@ -112,7 +112,7 @@ public class OrdersItemsDAO implements Dao<OrdersItems>{
 	@Override
 	public int delete(long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
-				PreparedStatement statement = connection.prepareStatement("DELETE FROM customers WHERE id = ?");) {
+				PreparedStatement statement = connection.prepareStatement("DELETE FROM orders_items WHERE id = ?");) {
 			statement.setLong(1, id);
 			return statement.executeUpdate();
 		} catch (Exception e) {
@@ -122,7 +122,22 @@ public class OrdersItemsDAO implements Dao<OrdersItems>{
 		return 0;
 	}
 
+	public int deleteItem(long id, long itemId) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				PreparedStatement statement = connection
+						.prepareStatement("DELETE FROM orders_items WHERE id = ? AND item_id = ?");) {
+			statement.setLong(1, id);
+			statement.setLong(2, itemId);
+			return statement.executeUpdate();
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return 0;
+		
 
+	}
+	
 
 	
 	

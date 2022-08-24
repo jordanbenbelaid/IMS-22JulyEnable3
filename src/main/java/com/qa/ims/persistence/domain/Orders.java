@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Orders {
 
-	private Long id;
+	private Long orderId;
 	private Long customerId;
 	
 	public Orders(Long customerId) {
@@ -13,18 +13,18 @@ public class Orders {
 		this.setCustomerId(customerId);
 	}
 
-	public Orders(Long id, Long customerId) {
+	public Orders(Long orderId, Long customerId) {
 		super();
-		this.setId(id);
+		this.setOrderId(orderId);
 		this.setCustomerId(customerId);
 	}
 
-	public Long getId() {
-		return id;
+	public Long getOrderId() {
+		return orderId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setOrderId(Long id) {
+		this.orderId = id;
 	}
 
 	public Long getCustomerId() {
@@ -37,12 +37,12 @@ public class Orders {
 
 	@Override
 	public String toString() {
-		return "id: " + id + " customer ID: " + customerId;
+		return "id: " + orderId + " customer ID: " + customerId;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(customerId, id);
+		return Objects.hash(customerId, orderId);
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class Orders {
 		if (getClass() != obj.getClass())
 			return false;
 		Orders other = (Orders) obj;
-		return Objects.equals(customerId, other.customerId) && Objects.equals(id, other.id);
+		return Objects.equals(customerId, other.customerId) && Objects.equals(orderId, other.orderId);
 	}
 	
 	

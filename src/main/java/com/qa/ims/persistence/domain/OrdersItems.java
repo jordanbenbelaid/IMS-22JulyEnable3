@@ -1,10 +1,5 @@
 package com.qa.ims.persistence.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-
 public class OrdersItems {
 
 	
@@ -17,10 +12,6 @@ public class OrdersItems {
 		this.setId(id);
 		this.setItemId(itemId);
 		this.setQuantity(quantity);
-	}
-
-	public OrdersItems(List<OrdersItems> orderDetails) {
-		
 	}
 
 	public Long getQuantity() {
