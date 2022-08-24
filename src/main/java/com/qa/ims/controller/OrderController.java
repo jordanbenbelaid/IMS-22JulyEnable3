@@ -90,6 +90,7 @@ public class OrderController implements CrudController<Order> {
 				if (item != null && order != null) {
 					break;
 				} else {
+					LOGGER.info("Some information you entered is incorrect, please try again");
 					continue;
 				}	
 		}
@@ -99,36 +100,35 @@ public class OrderController implements CrudController<Order> {
 		return order;
 	}
 	
-	public int altAddItem() {
-		ItemDAO itemDAO = new ItemDAO();
-		OrderDAO ordDAO = new OrderDAO();
-		OrderLineItemDAO lineItemDAO = new OrderLineItemDAO();
-		while(true) {
-			try {
-				LOGGER.info("Please enter the order id");
-				Long orderId = utils.getLong();
-				Order order = ordDAO.read(orderId);
-				LOGGER.info("Please enter the item id");
-				Long itemId = utils.getLong();
-				Item item = itemDAO.read(itemId);
-				LOGGER.info("Please enter the item quantity");
-				Long quantity = utils.getLong();
-				OrderLineItem currentItem = lineItemDAO.readByOrderItem(orderId, itemId);
-			} catch (Exception e) {
-				return 0;
-			}
-		}
-	}
-	
 	public Order removeItem() {
 		OrderLineItemDAO lineItemDAO = new OrderLineItemDAO();
 		ItemDAO itemDAO = new ItemDAO();
-		LOGGER.info("Please enter the order id");
-		Long orderId = utils.getLong();
-		LOGGER.info("Please enter the id of the item to remove");
-		Long itemId = utils.getLong();
-		Item item = itemDAO.read(itemId);
-		OrderLineItem lineItem = lineItemDAO.readByOrderItem(orderId, itemId);
+		OrderLineItem lineItem;
+		Item item;
+		Long orderId;
+		while (true) {
+			LOGGER.info("Please enter the order id");
+			orderId = utils.getLong();
+			LOGGER.info("Please enter the id of the item to remove");
+			Long itemId = utils.getLong();
+			item = itemDAO.read(itemId);
+			Order order = orderDAO.read(orderId);
+			if (item == null || order == null) {
+				LOGGER.info("Some information you entered is incorrect, please try again");
+				continue;
+			} else {
+				lineItem = lineItemDAO.readByOrderItem(orderId, itemId);
+				if (lineItem != null) {
+					break;
+				} else {
+					LOGGER.info("This order does not contain the selected item.");
+					continue;
+				}
+				
+			}
+			
+		}
+		
 		lineItemDAO.delete(lineItem.getId());
 		item.updateStock(lineItem.getQuantity());
 		itemDAO.update(item);
