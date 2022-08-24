@@ -14,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.persistence.domain.Order;
+import com.qa.ims.persistence.domain.OrderLineItem;
 import com.qa.ims.utils.DBUtils;
 
 public class OrderDAO implements Dao<Order> {
@@ -35,9 +36,20 @@ public class OrderDAO implements Dao<Order> {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders");) {
+			Order order;
+			List<OrderLineItem> lineItems;
+			OrderLineItemDAO lineItemDAO = new OrderLineItemDAO();
 			List<Order> orders = new ArrayList<>();
 			while (resultSet.next()) {
-				orders.add(modelFromResultSet(resultSet));
+				order = modelFromResultSet(resultSet);
+				lineItems = lineItemDAO.readByOrderId(order.getId());
+				if(lineItems.size() > 0) {
+					for(OrderLineItem lineItem : lineItems) {
+						order.addOrderLineItem(lineItem);
+					}
+				}
+
+				orders.add(order);
 			}
 			return orders;
 		} catch (SQLException e) {

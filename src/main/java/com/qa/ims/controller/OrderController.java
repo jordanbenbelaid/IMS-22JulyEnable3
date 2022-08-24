@@ -6,10 +6,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.qa.ims.persistence.dao.CustomerDAO;
+import com.qa.ims.persistence.dao.ItemDAO;
 import com.qa.ims.persistence.dao.OrderDAO;
+import com.qa.ims.persistence.dao.OrderLineItemDAO;
 import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.persistence.domain.Order;
+import com.qa.ims.persistence.domain.OrderLineItem;
 import com.qa.ims.utils.Utils;
 
 public class OrderController implements CrudController<Order> {
@@ -58,6 +61,23 @@ public class OrderController implements CrudController<Order> {
 		Customer customer = custDAO.read(customerId);
 		Order order = orderDAO.update(new Order(id, orderNumber, customer));
 		LOGGER.info("Order updated");
+		return order;
+	}
+	
+	public Order addItem() {
+		ItemDAO itemDAO = new ItemDAO();
+		OrderLineItemDAO lineItemDAO = new OrderLineItemDAO();
+		LOGGER.info("Please enter the order id");
+		Long orderId = utils.getLong();
+		Order order = orderDAO.read(orderId);
+		LOGGER.info("Please enter the item id");
+		Long itemId = utils.getLong();
+		Item item = itemDAO.read(itemId);
+		LOGGER.info("Please enter the item quantity");
+		Long quantity = utils.getLong();
+		OrderLineItem lineItem = lineItemDAO.create(new OrderLineItem(item, quantity, orderId));
+		order.addOrderLineItem(lineItem);
+		LOGGER.info(item.getName() + " added");
 		return order;
 	}
 
