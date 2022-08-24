@@ -61,6 +61,19 @@ public class Order {
 	public void removeOrderLineItem(OrderLineItem orderLineItem) {
 		this.orderLineItems.remove(orderLineItem);
 	}
+	
+	public void calculateTotal() {
+		Double total = 0d;
+		if (this.orderLineItems.size() > 0) {
+			for (OrderLineItem lineItem : this.orderLineItems) {
+				Double price = lineItem.getItem().getPrice();
+				Long quantity = lineItem.getQuantity();
+				total += price * quantity;
+			}
+			
+		} 
+		this.orderTotal = total;
+	}
 
 	@Override
 	public String toString() {
