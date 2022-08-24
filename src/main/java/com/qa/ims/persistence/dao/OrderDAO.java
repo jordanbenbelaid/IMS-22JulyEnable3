@@ -22,13 +22,20 @@ public class OrderDAO implements Dao<Order> {
 	public static final Logger LOGGER = LogManager.getLogger();
 
 	@Override
-	public Order modelFromResultSet(ResultSet resultSet) throws SQLException {
-		CustomerDAO custDAO = new CustomerDAO();
-		Long id = resultSet.getLong("id");
-		String orderNumber = resultSet.getString("order_number");
-		Long customerId = resultSet.getLong("customer_id");
-		Customer customer = custDAO.read(customerId);
-		return new Order(id, orderNumber, customer);
+	public Order modelFromResultSet(ResultSet resultSet) {
+		try {
+			CustomerDAO custDAO = new CustomerDAO();
+			Long id = resultSet.getLong("id");
+			String orderNumber = resultSet.getString("order_number");
+			Long customerId = resultSet.getLong("customer_id");
+			Customer customer = custDAO.read(customerId);
+			return new Order(id, orderNumber, customer);
+		} catch (SQLException e) {
+			LOGGER.debug(e);
+			LOGGER.info("Order does not exist");
+			return null;
+		}
+		
 	}
 	
 	@Override
@@ -68,10 +75,12 @@ public class OrderDAO implements Dao<Order> {
 			try (ResultSet resultSet = statement.executeQuery();) {
 				resultSet.next();
 				Order order = modelFromResultSet(resultSet);
-				List<OrderLineItem> lineItems = lineItemDAO.readByOrderId(order.getId());
-				if(lineItems.size() > 0) {
-					for(OrderLineItem lineItem : lineItems) {
-						order.addOrderLineItem(lineItem);
+				if (order != null) {
+					List<OrderLineItem> lineItems = lineItemDAO.readByOrderId(order.getId());
+					if(lineItems.size() > 0) {
+						for(OrderLineItem lineItem : lineItems) {
+							order.addOrderLineItem(lineItem);
+						}
 					}
 				}
 				return order;
