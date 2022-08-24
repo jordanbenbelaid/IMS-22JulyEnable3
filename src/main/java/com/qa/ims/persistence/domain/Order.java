@@ -56,10 +56,12 @@ public class Order {
 
 	public void addOrderLineItem(OrderLineItem orderLineItem) {
 		this.orderLineItems.add(orderLineItem);
+		this.calculateTotal();
 	}
 	
 	public void removeOrderLineItem(OrderLineItem orderLineItem) {
 		this.orderLineItems.remove(orderLineItem);
+		this.calculateTotal();
 	}
 	
 	public void calculateTotal() {
