@@ -73,26 +73,29 @@ public class OrderController implements CrudController<Order> {
 	
 	public Order addItem() {
 		ItemDAO itemDAO = new ItemDAO();
-		OrderLineItemDAO lineItemDAO = new OrderLineItemDAO();
-		LOGGER.info("Please enter the order id");
-		Long orderId = utils.getLong();
-		LOGGER.info("Please enter the item id");
-		Long itemId = utils.getLong();
-		Item item = itemDAO.read(itemId);
-		LOGGER.info("Please enter the item quantity");
-		Long quantity = utils.getLong();
-		OrderLineItem currentItem = lineItemDAO.readByOrderItem(orderId, itemId);
-		OrderLineItem lineItem;
-		if (currentItem != null) {
-			currentItem.setQuantity(currentItem.getQuantity() + quantity);
-			lineItem = lineItemDAO.update(currentItem);
-		} else {
-			lineItem = lineItemDAO.create(new OrderLineItem(item, quantity, orderId));
+		OrderLineItemController lineItemController = new OrderLineItemController();
+		Item item;
+		Long orderId;
+		Long itemId;
+		Long quantity;
+		while (true) {
+				LOGGER.info("Please enter the order id");
+				orderId = utils.getLong();
+				LOGGER.info("Please enter the item id");
+				itemId = utils.getLong();
+				LOGGER.info("Please enter the item quantity");
+				quantity = utils.getLong();
+				item = itemDAO.read(itemId);
+				Order order = orderDAO.read(orderId);
+				if (item != null && order != null) {
+					break;
+				} else {
+					continue;
+				}	
 		}
-		item.updateStock(-quantity);
-		itemDAO.update(item);
+		lineItemController.addToOrder(item, orderId, itemId, quantity);
 		Order order = calculateTotal(orderId);
-		LOGGER.info(quantity + " of " + lineItem.getItem().getName() + " added");
+		LOGGER.info(quantity + " of " + item.getName() + " added");
 		return order;
 	}
 	
