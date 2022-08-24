@@ -1,6 +1,10 @@
 package com.qa.ims.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import org.apache.logging.log4j.LogManager;
@@ -48,17 +52,29 @@ public class OrdersController implements CrudController<Orders> {
 		LOGGER.info("Would you like to add details to this order? Y/N?");
 		String details = scan.nextLine();
 		if(details.equalsIgnoreCase("y")) {
-				LOGGER.info("Please enter the id of the item you would like to order");
-				Long itemId = utils.getLong();
-				LOGGER.info("Please enter the quanitity you would like of this item");
-				Long quantity = utils.getLong();
-				OrdersItems ordersItems = oi.create(new OrdersItems(orders.getId(), itemId , quantity));
-				LOGGER.info("Your order has been created");
-			} else { 
-				LOGGER.info("Your order has been created without any details");
+			boolean isRunning = true;
+				
+			while(isRunning) {
+			LOGGER.info("Please enter the id of the item you would like to order");
+			Long itemId = utils.getLong();
+			LOGGER.info("Please enter the quanitity you would like of this item");
+			Long quantity = utils.getLong();
+			
+			OrdersItems ordersItems = oi.create(new OrdersItems(orders.getId(), itemId , quantity));
+			LOGGER.info("Item added to order");
+	
+			LOGGER.info("Would you like to order another item? Y/N?");
+			String addAnother = scan.nextLine();
+			if(addAnother.equalsIgnoreCase("n")) isRunning = false;
+			
 			}
+	
+			} else {
+				LOGGER.info("Your order has been created without details");
+			}
+			
 		return orders;
-	}
+	}			
 
 	//updating the customer associated with the order
 	@Override
