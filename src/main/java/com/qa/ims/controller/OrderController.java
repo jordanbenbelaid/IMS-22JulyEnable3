@@ -89,6 +89,27 @@ public class OrderController implements CrudController<Order> {
 		return order;
 	}
 	
+	public int altAddItem() {
+		ItemDAO itemDAO = new ItemDAO();
+		OrderDAO ordDAO = new OrderDAO();
+		OrderLineItemDAO lineItemDAO = new OrderLineItemDAO();
+		while(true) {
+			try {
+				LOGGER.info("Please enter the order id");
+				Long orderId = utils.getLong();
+				Order order = ordDAO.read(orderId);
+				LOGGER.info("Please enter the item id");
+				Long itemId = utils.getLong();
+				Item item = itemDAO.read(itemId);
+				LOGGER.info("Please enter the item quantity");
+				Long quantity = utils.getLong();
+				OrderLineItem currentItem = lineItemDAO.readByOrderItem(orderId, itemId);
+			} catch (Exception e) {
+				return 0;
+			}
+		}
+	}
+	
 	public Order removeItem() {
 		OrderLineItemDAO lineItemDAO = new OrderLineItemDAO();
 		ItemDAO itemDAO = new ItemDAO();
