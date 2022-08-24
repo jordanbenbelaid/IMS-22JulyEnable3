@@ -97,8 +97,10 @@ public class IMS {
 		
 		if (action == OrderAction.UPDATE) {
 			doAction(active, Action.UPDATE);
-		} else {
+		} else if(action == OrderAction.ADD) {
 			this.orders.addItem();
+		} else {
+			this.orders.removeItem();
 		}
 	}
 
