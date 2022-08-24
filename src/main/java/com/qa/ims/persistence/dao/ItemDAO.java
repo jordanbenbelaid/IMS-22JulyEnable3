@@ -19,12 +19,19 @@ public class ItemDAO implements Dao<Item> {
 	public static final Logger LOGGER = LogManager.getLogger();
 
 	@Override
-	public Item modelFromResultSet(ResultSet resultSet) throws SQLException {
-		Long id = resultSet.getLong("id");
-		String name = resultSet.getString("name");
-		Double price = resultSet.getDouble("price");
-		Long stock = resultSet.getLong("stock");
-		return new Item(id, name, price, stock);
+	public Item modelFromResultSet(ResultSet resultSet) {
+		try {
+			Long id = resultSet.getLong("id");
+			String name = resultSet.getString("name");
+			Double price = resultSet.getDouble("price");
+			Long stock = resultSet.getLong("stock");
+			return new Item(id, name, price, stock);
+		} catch(SQLException e) {
+			LOGGER.debug(e);
+			LOGGER.info("Item does not exist");
+			return null;
+		}
+		
 	}
 	
 	@Override

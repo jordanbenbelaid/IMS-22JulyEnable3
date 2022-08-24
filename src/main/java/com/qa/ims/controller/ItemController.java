@@ -54,7 +54,9 @@ public class ItemController implements CrudController<Item> {
 		LOGGER.info("Please enter the number in stock");
 		Long stock = utils.getLong();
 		Item item = itemDAO.update(new Item(id, name, price, stock));
-		LOGGER.info("Item updated");
+		if (item != null) {
+			LOGGER.info("Item updated");
+		}
 		return item;
 	}
 
