@@ -29,7 +29,7 @@ public class OrderDAOTest {
 	
 	@Test
 	public void testCreate() {
-		final Order testOrder = new Order(3l, "abc", testCustomer);
+		final Order testOrder = new Order(2l, "abc", testCustomer);
 		assertEquals(testOrder, dao.create(testOrder));
 	}
 	
@@ -37,16 +37,14 @@ public class OrderDAOTest {
 	public void testReadAll() {
 		List<Order> testOrders = new ArrayList<>();
 		Order testOrder = new Order(1l, "abc1234", testCustomer);
-		Order orderTwo = new Order(2l, "1234", testCustomer);
 		testOrder.addOrderLineItem(testLineItem);
 		testOrders.add(testOrder);
-		testOrders.add(orderTwo);
 		assertEquals(testOrders, dao.readAll());
 	}
 	
 	@Test
 	public void testReadLatest() {
-		assertEquals(new Order(2L, "1234", testCustomer), dao.readLatest());
+		assertEquals(new Order(1L, "abc1234", testCustomer), dao.readLatest());
 	}
 	
 	@Test
@@ -74,8 +72,7 @@ public class OrderDAOTest {
 
 	@Test
 	public void testDelete() {
-		assertEquals(1, dao.delete(2));
+		assertEquals(1, dao.delete(1));
 	}
 	
-
 }
