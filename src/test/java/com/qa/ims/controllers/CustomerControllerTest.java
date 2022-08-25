@@ -54,6 +54,17 @@ public class CustomerControllerTest {
 
 		Mockito.verify(dao, Mockito.times(1)).readAll();
 	}
+	
+	@Test
+	public void testReadAllNoCustomers() {
+		List<Customer> customers = new ArrayList<>();
+
+		Mockito.when(dao.readAll()).thenReturn(customers);
+
+		assertEquals(customers, controller.readAll());
+
+		Mockito.verify(dao, Mockito.times(1)).readAll();
+	}
 
 	@Test
 	public void testUpdate() {
@@ -64,6 +75,21 @@ public class CustomerControllerTest {
 		Mockito.when(this.dao.update(updated)).thenReturn(updated);
 
 		assertEquals(updated, this.controller.update());
+
+		Mockito.verify(this.utils, Mockito.times(1)).getLong();
+		Mockito.verify(this.utils, Mockito.times(2)).getString();
+		Mockito.verify(this.dao, Mockito.times(1)).update(updated);
+	}
+	
+	@Test
+	public void testUpdateItemDoesntExist() {
+		Customer updated = new Customer(1L, "chris", "perrins");
+
+		Mockito.when(this.utils.getLong()).thenReturn(1L);
+		Mockito.when(this.utils.getString()).thenReturn(updated.getFirstName(), updated.getSurname());
+		Mockito.when(this.dao.update(updated)).thenReturn(null);
+
+		assertEquals(null, this.controller.update());
 
 		Mockito.verify(this.utils, Mockito.times(1)).getLong();
 		Mockito.verify(this.utils, Mockito.times(2)).getString();

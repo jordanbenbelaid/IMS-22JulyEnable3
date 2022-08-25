@@ -76,8 +76,9 @@ public class Item {
 		if (getClass() != obj.getClass())
 			return false;
 		Item other = (Item) obj;
-		return Objects.equals(id, other.id) && Objects.equals(name, other.name)
-				&& Double.doubleToLongBits(price) == Double.doubleToLongBits(other.price) && stock == other.stock;
+		return Objects.equals(id, other.id) && Objects.equals(name, other.name) && Objects.equals(price, other.price)
+				&& Objects.equals(stock, other.stock);
 	}
+	
 
 }

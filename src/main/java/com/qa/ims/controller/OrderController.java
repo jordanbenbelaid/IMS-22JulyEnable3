@@ -20,10 +20,16 @@ public class OrderController implements CrudController<Order> {
 	public static final Logger LOGGER = LogManager.getLogger();
 
 	private OrderDAO orderDAO;
+	private CustomerDAO custDAO;
+	private ItemDAO itemDAO;
+	private OrderLineItemDAO lineItemDAO;
 	private Utils utils;
 
-	public OrderController(OrderDAO orderDAO, Utils utils) {
+	public OrderController(OrderDAO orderDAO, CustomerDAO custDAO, ItemDAO itemDAO, OrderLineItemDAO lineItemDAO, Utils utils) {
 		this.orderDAO = orderDAO;
+		this.custDAO = custDAO;
+		this.itemDAO = itemDAO;
+		this.lineItemDAO = lineItemDAO;
 		this.utils = utils;
 	}
 
@@ -51,7 +57,6 @@ public class OrderController implements CrudController<Order> {
 	 */
 	@Override
 	public Order create() {
-		CustomerDAO custDAO = new CustomerDAO();
 		LOGGER.info("Please enter an order number");
 		String orderNumber = utils.getString();
 		LOGGER.info("Please enter a customer id");
@@ -75,7 +80,6 @@ public class OrderController implements CrudController<Order> {
 	 */
 	@Override
 	public Order update() {
-		CustomerDAO custDAO = new CustomerDAO();
 		LOGGER.info("Please enter the id of the order you would like to update");
 		Long id = utils.getLong();
 		LOGGER.info("Please enter an order number");
@@ -103,9 +107,6 @@ public class OrderController implements CrudController<Order> {
 	 * the database updates. 
 	 */
 	public Order addItem() {
-		ItemDAO itemDAO = new ItemDAO();
-		OrderLineItemController lineItemController = new OrderLineItemController();
-
 		LOGGER.info("Please enter the order id");
 		Long orderId = utils.getLong();
 		LOGGER.info("Please enter the item id");
@@ -115,7 +116,18 @@ public class OrderController implements CrudController<Order> {
 		Item item = itemDAO.read(itemId);
 		Order order = orderDAO.read(orderId);
 		if (item != null && order != null) {
-			lineItemController.addToOrder(item, orderId, itemId, quantity);
+			OrderLineItem currentLineItem = lineItemDAO.readByOrderItem(orderId, itemId);
+			OrderLineItem lineItem;
+			
+			if (currentLineItem != null) {
+				currentLineItem.setQuantity(currentLineItem.getQuantity() + quantity);
+				lineItem = lineItemDAO.update(currentLineItem);
+			} else {
+				lineItem = lineItemDAO.create(new OrderLineItem(item, quantity, orderId));
+			}
+			item.updateStock(-quantity);
+			itemDAO.update(item);
+			
 			Order updatedOrder = calculateTotal(orderId);
 			LOGGER.info(quantity + " of " + item.getName() + " added");
 			return updatedOrder;
@@ -132,9 +144,6 @@ public class OrderController implements CrudController<Order> {
 	 * ids have been added. 
 	 */
 	public Order removeItem() {
-		OrderLineItemDAO lineItemDAO = new OrderLineItemDAO();
-		ItemDAO itemDAO = new ItemDAO();
-
 		LOGGER.info("Please enter the order id");
 		Long orderId = utils.getLong();
 		LOGGER.info("Please enter the id of the item to remove");

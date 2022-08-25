@@ -64,6 +64,10 @@ public class Order {
 		this.calculateTotal();
 	}
 	
+	public List<OrderLineItem> getOrderLineItems() {
+		return orderLineItems;
+	}
+
 	public void calculateTotal() {
 		Double total = 0d;
 		if (this.orderLineItems.size() > 0) {
@@ -79,7 +83,7 @@ public class Order {
 
 	@Override
 	public String toString() {
-		return "id: " + id + " orderNumber: " + orderNumber + " customer: " + customer + " items: " + orderLineItems + " total price " + orderTotal;
+		return "id: " + id + " orderNumber: " + orderNumber + " customer: " + customer + " items: " + orderLineItems + " total price: " + orderTotal;
 	}
 
 	@Override

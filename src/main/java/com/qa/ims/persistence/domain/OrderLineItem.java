@@ -55,7 +55,7 @@ public class OrderLineItem {
 
 	@Override
 	public String toString() {
-		return " name: " + item.getName() + " quantity: " + quantity;
+		return "name: " + item.getName() + " quantity: " + quantity;
 	}
 
 	@Override
@@ -75,5 +75,7 @@ public class OrderLineItem {
 		return Objects.equals(id, other.id) && Objects.equals(item, other.item)
 				&& Objects.equals(orderId, other.orderId) && Objects.equals(quantity, other.quantity);
 	}
+	
+	
 
 }
