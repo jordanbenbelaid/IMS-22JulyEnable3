@@ -1,6 +1,7 @@
 package com.qa.ims.persistence.domain;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
@@ -76,6 +77,16 @@ public class OrderTest {
 		testOrder.setId(1l);
 		String expected = "id: 1 orderNumber: abc123 customer: id: 1 first name: Name surname: Surname items: [] total price: 0.0";
 		assertEquals(expected, testOrder.toString());
+	}
+	
+	@Test
+	public void testHashCodeAndEquals() {
+		Order testOrder = new Order("abc123", testCustomer);
+		Order otherOrder = new Order("abc123", testCustomer);
+		
+		assertTrue(testOrder.equals(otherOrder) && otherOrder.equals(testOrder));
+		assertNotSame(testOrder, otherOrder);
+		assertEquals(testOrder.hashCode(), otherOrder.hashCode());
 	}
 
 }

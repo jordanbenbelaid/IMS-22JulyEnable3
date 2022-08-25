@@ -1,6 +1,7 @@
 package com.qa.ims.controllers;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import com.qa.ims.controller.OrderController;
-import com.qa.ims.controller.OrderLineItemController;
 import com.qa.ims.persistence.dao.CustomerDAO;
 import com.qa.ims.persistence.dao.ItemDAO;
 import com.qa.ims.persistence.dao.OrderDAO;
@@ -41,9 +41,6 @@ public class OrderControllerTest {
 	@Mock
 	private OrderLineItemDAO lineItemDao;
 	
-	@Mock
-	private OrderLineItemController itemController;
-	
 	@InjectMocks
 	private OrderController controller;
 	
@@ -51,7 +48,7 @@ public class OrderControllerTest {
 	public void testCreate() {
 		final String ORDERNUMBER = "abc1234";
 		final Long CUSTOMERID = 1l;
-		final Customer testCustomer = new Customer(CUSTOMERID, "John", "Smith");
+		final Customer testCustomer = new Customer(CUSTOMERID, "jordan", "harrison");
 		final Order testOrder = new Order(ORDERNUMBER, testCustomer);
 		
 		Mockito.when(utils.getString()).thenReturn(ORDERNUMBER);
@@ -205,15 +202,19 @@ public class OrderControllerTest {
 		Mockito.when(utils.getLong()).thenReturn(ORDERID, ITEMID, QUANTITY);
 		Mockito.when(itemDao.read(ITEMID)).thenReturn(testItem);
 		Mockito.when(dao.read(ORDERID)).thenReturn(testOrder);
-		Mockito.when(itemController.addToOrder(testItem, ORDERID, ITEMID, QUANTITY)).thenReturn(testLineItem);
+		Mockito.when(lineItemDao.readByOrderItem(ORDERID, ITEMID)).thenReturn(testLineItem);
+		Mockito.when(lineItemDao.update(testLineItem)).thenReturn(testLineItem);
+		Mockito.when(itemDao.update(testItem)).thenReturn(testItem);
 		Mockito.when(dao.update(testOrder)).thenReturn(testOrder);
 		
 		assertEquals(testOrder, controller.addItem());
 		
 		Mockito.verify(utils, Mockito.times(3)).getLong();
 		Mockito.verify(itemDao, Mockito.times(1)).read(ITEMID);
+		Mockito.verify(itemDao, Mockito.times(1)).update(testItem);
+		Mockito.verify(lineItemDao, Mockito.times(1)).readByOrderItem(ORDERID, ITEMID);
+		Mockito.verify(lineItemDao, Mockito.times(1)).update(testLineItem);
 		Mockito.verify(dao, Mockito.times(2)).read(ORDERID);
-		Mockito.verify(itemController, Mockito.times(1)).addToOrder(testItem, ORDERID, ITEMID, QUANTITY);
 	}
 	
 	@Test

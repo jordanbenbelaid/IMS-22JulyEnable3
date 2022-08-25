@@ -1,6 +1,7 @@
 package com.qa.ims.persistence.domain;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
@@ -50,11 +51,16 @@ public class CustomerTest {
 		String expected = "id: 1 first name: Name surname: Surname";
 		assertEquals(expected, testCustomer.toString());
 	}
-
-
-//	@Test
-//	public void testEquals() {
-//		EqualsVerifier.simple().forClass(Customer.class).verify();
-//	}
+	
+//	Taken from https://stackoverflow.com/questions/4449728/
+	@Test
+	public void testHashCodeAndEquals() {
+		Customer testCustomer = new Customer("John", "Smith");
+		Customer otherCustomer = new Customer("John", "Smith");
+		
+		assertTrue(testCustomer.equals(otherCustomer) && otherCustomer.equals(testCustomer));
+		assertNotSame(testCustomer, otherCustomer);
+		assertEquals(testCustomer.hashCode(), otherCustomer.hashCode());
+	}
 
 }
