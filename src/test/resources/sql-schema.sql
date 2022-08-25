@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
 	`customer_id` INT,
     `order_total` DECIMAL(8, 2) DEFAULT 0.00,
 	PRIMARY KEY (`id`),
-    CONSTRAINT FOREIGN KEY (`customer_id`) REFERENCES `ims`.`customers` (`id`) ON DELETE SET NULL
+    CONSTRAINT FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS `order_line_items` (
@@ -33,6 +33,6 @@ CREATE TABLE IF NOT EXISTS `order_line_items` (
     `quantity` INT DEFAULT 0,
     `order_id` INT NOT NULL,
     PRIMARY KEY (`id`),
-    CONSTRAINT FOREIGN KEY (`item_id`) REFERENCES `ims`.`items` (`id`) ON DELETE SET NULL,
-    CONSTRAINT FOREIGN KEY (`order_id`) REFERENCES `ims`.`orders` (`id`) ON DELETE CASCADE
+    CONSTRAINT FOREIGN KEY (`item_id`) REFERENCES `items` (`id`) ON DELETE SET NULL,
+    CONSTRAINT FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE
 );

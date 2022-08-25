@@ -86,4 +86,23 @@ public class Order {
 		return "id: " + id + " orderNumber: " + orderNumber + " customer: " + customer + " items: " + orderLineItems + " total price: " + orderTotal;
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(customer, id, orderLineItems, orderNumber, orderTotal);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Order other = (Order) obj;
+		return Objects.equals(customer, other.customer) && Objects.equals(id, other.id)
+				&& Objects.equals(orderLineItems, other.orderLineItems)
+				&& Objects.equals(orderNumber, other.orderNumber) && Objects.equals(orderTotal, other.orderTotal);
+	}
+
 }

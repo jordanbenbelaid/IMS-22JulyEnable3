@@ -62,4 +62,23 @@ public class Item {
 		return "id: " + id + " name: " + name + " price: " + price + " stock: " + stock;
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, name, price, stock);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Item other = (Item) obj;
+		return Objects.equals(id, other.id) && Objects.equals(name, other.name) && Objects.equals(price, other.price)
+				&& Objects.equals(stock, other.stock);
+	}
+	
+
 }

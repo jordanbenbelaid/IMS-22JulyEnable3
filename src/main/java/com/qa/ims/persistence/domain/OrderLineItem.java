@@ -58,4 +58,24 @@ public class OrderLineItem {
 		return "name: " + item.getName() + " quantity: " + quantity;
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, item, orderId, quantity);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		OrderLineItem other = (OrderLineItem) obj;
+		return Objects.equals(id, other.id) && Objects.equals(item, other.item)
+				&& Objects.equals(orderId, other.orderId) && Objects.equals(quantity, other.quantity);
+	}
+	
+	
+
 }
