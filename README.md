@@ -5,15 +5,76 @@ This project is an inventory management system which takes user input via the co
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will detail how to get a copy of the project up and running on a local machine for development and testing purposes. It should be noted that these instructions are based on a Windows system.
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+#### Git
+
+Git is a version control system to track changes to the project and push these changes to the repository. It can be downloaded and installed [here](https://git-scm.com/downloads).
+
+**Installing Git**
+
+* Download the installer and run it.
+* Work through the setup pages selecting the most appropriate options, the below are some recommended selections.
+* It is recommended that the default branch name is set as main.
+* Select to use Git from Git Bash and the command line.
+
+**Configuring Git**
+
+* Open Git Bash then enter the following
 
 ```
-Give examples
+git config --global user.name "username"
+git config --global user.email "email@email.com"
 ```
+* Using the same credentials as GitHub (see below) is recommended.
+
+#### GitHub
+
+GitHub can be used to manage the source control of the project. It is free to sign up for an account [here](https://github.com/).
+
+**Forking the GitHub Repository**
+
+* On GitHub navigate to the main page of the repository.
+* The 'Fork' button can be found on the top right-hand side of the screen.
+* Click the button to create a copy of the original repository.
+
+**Cloning the Repository to a Local Machine**
+
+* On GitHub navigate to the main page of the repository.
+* Above the list of folders and files select Code and in the HTTPS section copy the URL.
+* Open Git Bash.
+* Using the cd command change the current working directory to the location required for the cloned directory.
+* Type git clone and paste in the copied url and press Enter to create the local clone.
+
+#### MySQL Server
+
+MySQL can be used to manage and test the database interactions and can be downloaded and installed [here](https://dev.mysql.com/downloads/windows/installer/8.0.html).
+
+**Installing MySQL Server**
+
+* Download and run the installer.
+* Chose custom Setup Type.
+* From the select products page select the newest versions of MySQLServer (MySQL Servers), MySQL Workbench (Applications).
+* Cycle through the new few options by clicking next or execute.
+* On the Accounts and Roles page enter a password for the root account. It is recommended that this is easy to remember and not sensitive (it will be copied to GitHub).
+* Cycle through the next few options and on the connecter server page enter the root password to check the connection.
+* Cycle through the next few windows and click finish.
+
+**Setting up a MySQL Environment Variable**
+
+* In the Start Menu search for 'env' then select 'edit the system environment variables'.
+* Select environment variables.
+* At the bottom under system variables select new then enter the following then select ok (note the value should point to the folder where MySQL is installed)
+
+![MySQL Variable](documentation/my-sql-variables.jpg)
+
+* Still within the system variables select Path then Edit. In the window that opens select New and then at the bottom add %MYSQL_HOME%\bin
+* Click OK on all the windows to confirm.
+* From the start menu search for MySQL select the MySQL command line client and login using the root password.
+* MySQL server should now be set-up. It is recommended that it is used via MySQL Workbench.
+
 
 ### Installing
 
