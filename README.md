@@ -1,80 +1,237 @@
-Coverage: 34%
-# Project Title
+Coverage: 78%
+# Inventory Management System (IMS)
 
-One Paragraph of project description goes here
+This project is an inventory management system which takes user input via the command-line interface. The user can interact with Customers Items and Orders and can create, read, update and delete each. The user can also add items to the orders. This will update the total price of the order and the stock of that item.
 
-## Getting Started
+## Planning
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+### Project Management
 
-### Prerequisites
+The project was planned and managed using Jira. The Jira project can be found [here](https://stephanie-ashdown.atlassian.net/jira/software/projects/IMS/boards/3/backlog). A number of user stories were created in the project backlog to describe the main functionality and these were grouped under epics.
 
-What things you need to install the software and how to install them
+![Jira Backlog](documentation/jira.jpg)
+
+A number of required tasks were linked to each user story to track the work required to complete the story.
+
+![Linked Tasks](documentation/linked-tasks.jpg)
+
+The work was was tracked in three sprints using a Kanban board and smart commits to manage the tracking and completion of the tasks. A risk assessment was also created to prepare for any risks that may adversely affect the project.
+
+### Database Schema
+
+The database schema was planned in advance using an ERD diagram. Focusing on a MVP a simple schema of Customers, Orders and Items was initially created before the more complicated Order Line Items were added.
+
+![ERD](documentation/erd-ims-project.jpg)
+
+## Running the Project Locally
+
+These instructions will detail how to get a copy of the project up and running on a local machine for development and testing purposes. It should be noted that these instructions are based on a Windows system.
+
+### Requirements
+
+#### Git
+
+Git is a version control system to track changes to the project and push these changes to the repository. It can be downloaded and installed [here](https://git-scm.com/downloads).
+
+**Installing Git**
+
+* Download the installer and run it.
+* Work through the setup pages selecting the most appropriate options, the below are some recommended selections.
+* It is recommended that the default branch name is set as main.
+* Select to use Git from Git Bash and the command line.
+
+**Configuring Git**
+
+* Open Git Bash then enter the following
 
 ```
-Give examples
+git config --global user.name "username"
+git config --global user.email "email@email.com"
 ```
+* Using the same credentials as GitHub (see below) is recommended.
 
-### Installing
+#### GitHub
 
-A step by step series of examples that tell you how to get a development env running
+GitHub can be used to manage the source control of the project. It is free to sign up for an account [here](https://github.com/).
 
-Say what the step will be
+**Forking the GitHub Repository**
 
-```
-Give the example
-```
+* On GitHub navigate to the main page of the repository.
+* The 'Fork' button can be found on the top right-hand side of the screen.
+* Click the button to create a copy of the original repository.
 
-And repeat
+**Cloning the Repository to a Local Machine**
 
-```
-until finished
-```
+* On GitHub navigate to the main page of the repository.
+* Above the list of folders and files select Code and in the HTTPS section copy the URL.
+* Open Git Bash.
+* Using the cd command change the current working directory to the location required for the cloned directory.
+* Type git clone and paste in the copied url and press Enter to create the local clone.
 
-End with an example of getting some data out of the system or using it for a little demo
+#### MySQL Server
 
-## Running the tests
+MySQL can be used to manage and test the database interactions and can be downloaded and installed [here](https://dev.mysql.com/downloads/windows/installer/8.0.html).
 
-Explain how to run the automated tests for this system. Break down into which tests and what they do
+**Installing MySQL Server**
+
+* Download and run the installer.
+* Chose custom Setup Type.
+* From the select products page select the newest versions of MySQLServer (MySQL Servers), MySQL Workbench (Applications).
+* Cycle through the new few options by clicking next or execute.
+* On the Accounts and Roles page enter a password for the root account. It is recommended that this is easy to remember and not sensitive (it will be copied to GitHub).
+* Cycle through the next few options and on the connecter server page enter the root password to check the connection.
+* Cycle through the next few windows and click finish.
+
+**Setting up a MySQL Environment Variable**
+
+* In the Start Menu search for 'env' then select 'edit the system environment variables'.
+* Select environment variables.
+* At the bottom under system variables select new then enter the following then select ok (note the value should point to the folder where MySQL is installed)
+
+![MySQL Variable](documentation/my-sql-variables.jpg)
+
+* Still within the system variables select Path then Edit. In the window that opens select New and then at the bottom add %MYSQL_HOME%\bin
+* Click OK on all the windows to confirm.
+* From the start menu search for MySQL select the MySQL command line client and login using the root password.
+* MySQL server should now be set-up. It is recommended that it is used via MySQL Workbench.
+
+#### Java
+
+Java is the back-end development language used for this project downloads for it can be found [here](https://www.oracle.com/java/technologies/downloads/).
+
+**Installing Java**
+
+* Download and run the Java Development kit one of the latest versions.
+* Install using default settings.
+
+**Setting up Java Environment Variable**
+
+* In the Start Menu search for 'env' then select 'edit the system environment variables'.
+* Select environment variables.
+* At the bottom under system variables select new then enter the following then select ok (note the value should point to the folder where Java jdk is installed)
+
+![Java Variable](documentation/java-variables.jpg)
+
+* Still within the system variables select Path then Edit. In the window that opens select New and then at the bottom add %JAVA_HOME%\bin
+* Click OK on all the windows to confirm.
+* To confirm successful installation open a command prompt and enter java an output similar to the below should be seen.
+
+![Java Command Prompt](documentation/java-installed.jpg)
+
+#### Maven
+
+Maven is used as a build automation tool for the project. It also allows the running of the unit tests it can be downloaded [here](https://maven.apache.org/).
+
+**Installing Maven**
+
+* Download the zip directory.
+* Extract the files into an appropriate folder.
+
+**Setting up Maven Environment Variable**
+
+* In the Start Menu search for 'env' then select 'edit the system environment variables'.
+* Select environment variables.
+* At the bottom under system variables select new twice to enter two new variables M2_HOME and MAVEN_HOME both pointing to the Maven directory (see above for more detailed instructions).
+* Still within the system variables select Path then Edit. In the window that opens select New and then at the bottom add %MAVEN_HOME%\bin
+* Click OK on all the windows to confirm.
+* To confirm successful installation open a command prompt and enter mvn -version.
+
+#### Eclipse
+
+Eclipse has been used as an Integrated Development Environment (IDE) for this project it can be downloaded and installed [here](https://www.eclipse.org/downloads/).
+
+**Installing Eclipse**
+
+* Download and run the installer.
+* Select Eclipse IDE for Java Developers.
+* Select install.
+
+### Opening and Running the Project
+
+These instructions will detail how to open and run the project in Eclipse.
+
+#### Importing the Project
+
+* Launch Eclipse and select a workspace location. It is recommended that the folder containing the project (not the project folder) is used.
+* Select file and Open Projects from file system.
+* Click the directory button next to the import source and browse for and select the project folder.
+* Click finish. The project folder should now be seen in the Package Explorer to the left of the IDE.
+
+#### Setting Up the Database
+
+* Launch MySQL Workbench.
+* Select the local instance and login using the root user and password.
+* Take a note of the localhost information.
+* In Eclipse the db.properties file in the src/main/resources folder update the database url, username and password to match the local system.
+* Open the sql-schema.sql SQL script file in Workbench and execute the statements.
+
+#### Running the Project
+
+* Expand the project folder.
+* Right click on the src/main/java folder and select Run As - Java Application
+* The application will now be running and the console at the bottom will request user input
+
+![Project Demo Welcome](documentation/running-project-welcome.jpg)
+
+* Type and enter the appropriate responses in the terminal to run through the project and create, read, update or delete Customers, Items or Orders.
+
+![Project Demo Welcome](documentation/creating-an-item.jpg)
+
+* Enter return to return to the welcome page and then stop to stop running the application.
+
+## Testing
 
 ### Unit Tests 
 
-Explain what these tests test, why and how to run them
+Unit tests have been written to cover the majority of code in the controller and persistence domain and persistence dao packages. They can be found in the src/test/java folder. The testing coverage of the src/main/java folder is currently at 78% just below industry standard. The main lack of coverage is currently seen in the IMS which contains complicated to test void methods and Utils which manages all user interaction via a Scanner class.
 
+![Testing Coverage](documentation/testing-coverage-ims-project.jpg)
+
+#### Domain
+
+The Classes for the Customer, Item, Order and OrderLineItem entities are found in this folder. Tests have been written to test the constructors, getters and setters and any custom methods.
+
+#### Controllers
+
+Methods controlling the interaction with the user for each entity are found in the controllers classes. These methods call methods in the DAO classes which manage the interaction with the database. All methods in the controller classes have been tested for functionality by using Mockito to mock the response from the user and DAO methods. Tests have been written to verify that each of these mocked methods are called the correct number of times.
+
+#### DAO
+
+The DAO classes manage the interaction with the database with methods to create, read, update and delete table entities. All methods in these files have been tested using an h2 testing database and sample data to ensure that the methods are running correctly and generating the correct returns.
+
+### Running the Tests
+
+To run all the tests right click on the src/test/java folder and select Run As -JUnit test (or Coverage As to see the code coverage). Alternatively right click on the individual test Classes to run these tests alone.
+
+## Packaging the Application to Run in the Command Line
+
+Maven has been used as a build tool for packaging the application. The process creates a fat .jar file. The following steps can be followed for this.
+
+* Ensure that the correct plugins are included in the pom.xml file. In this version of the project the plugins have already been added.
+* Open a terminal in the project folder.
+* Enter mvn clean
+* Enter mvn package
+* This can also be carried out in Eclipse by right clicking on the project and selecting Run As - Maven build.
+* To run the application, in the command line navigate to to folder containing the .jar file and enter
 ```
-Give an example
+java -jar finename.jar
 ```
 
-### Integration Tests 
-Explain what these tests test, why and how to run them
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
 
 ## Built With
 
+* [Java](https://www.java.com/en/) - Backend programming language
 * [Maven](https://maven.apache.org/) - Dependency Management
+* [MySQL](https://www.mysql.com/) - Relational (SQL) Database Management
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning.
+* [Git](https://git-scm.com/) has been used as a version control system.
 
 ## Authors
 
 * **Chris Perrins** - *Initial work* - [christophperrins](https://github.com/christophperrins)
+* **Stephanie Ashdown** - *All other work* - [stephanie-ash](https://github.com/Stephanie-Ash) 
 
 ## License
 
@@ -84,8 +241,6 @@ This project is licensed under the MIT license - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
-# IMS-Start
-# IMS-Start
+* Chris Perrins for the initial work.
+* [Lucidchart](https://www.lucidchart.com/) was used to create the ERD
+* [plantUML](https://plantuml.com/starting) was used to create the UML
