@@ -1,7 +1,7 @@
 Coverage: 78%
 # Inventory Management System (IMS)
 
-This project is an inventory management system which takes user input via the command-line interface. The user can interact with Customers Items and Orders and can create update an delete each. The user can also add items to the orders. This will update the total price of the order and the stock of that item.
+This project is an inventory management system which takes user input via the command-line interface. The user can interact with Customers Items and Orders and can create, read, update and delete each. The user can also add items to the orders. This will update the total price of the order and the stock of that item.
 
 ## Getting Started
 
@@ -126,23 +126,30 @@ Eclipse has been used as an Integrated Development Environment (IDE) for this pr
 * Select Eclipse IDE for Java Developers.
 * Select install.
 
-### Installing
+### Opening and Running the Project
 
-A step by step series of examples that tell you how to get a development env running
+These instructions will detail how to open and run the project in Eclipse.
 
-Say what the step will be
+#### Importing the Project
 
-```
-Give the example
-```
+* Launch Eclipse and select a workspace location. It is recommended that the folder containing the project (not the project folder) is used.
+* Select file and Open Projects from file system.
+* Click the directory button next to the import source and browse for and select the project folder.
+* Click finish. The project folder should now be seen in the Package Explorer to the left of the IDE.
 
-And repeat
+#### Running the Project
 
-```
-until finished
-```
+* Expand the project folder.
+* Right click on the src/main/java folder and select Run As - Java Application
+* The application will now be running and the console at the bottom will request user input
 
-End with an example of getting some data out of the system or using it for a little demo
+![Project Demo Welcome](documentation/running-project-welcome.jpg)
+
+* Type and enter the appropriate responses in the terminal to run through the project and create, read, update or delete Customers, Items or Orders.
+
+![Project Demo Welcome](documentation/creating-an-item.jpg)
+
+* Enter return to return to the welcome page and then stop to stop running the application.
 
 ## Running the tests
 
