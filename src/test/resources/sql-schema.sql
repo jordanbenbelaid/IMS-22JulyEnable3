@@ -33,6 +33,6 @@ CREATE TABLE IF NOT EXISTS `order_line_items` (
     `quantity` INT DEFAULT 0,
     `order_id` INT NOT NULL,
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`item_id`) REFERENCES `items` (`id`) ON DELETE SET NULL,
+    FOREIGN KEY (`item_id`) REFERENCES `items` (`id`) ON DELETE CASCADE,
     FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE
 );
