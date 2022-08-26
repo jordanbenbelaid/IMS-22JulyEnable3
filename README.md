@@ -7,7 +7,7 @@ This project is an inventory management system which takes user input via the co
 
 ### Project Management
 
-The project was planned and managed using Jira. The Jira project can be found [here](https://stephanie-ashdown.atlassian.net/jira/software/projects/IMS/boards/3/backlog). A number of user stories were created in the project backlog to describe the main functionality and these were grouped under epics.
+The project was planned and managed using Jira. The Jira project can be found [here](https://stephanie-ashdown.atlassian.net/jira/software/projects/IMS/boards/3/backlog). The issues included in each sprint can be viewed under reports - sprint burndown chart. A number of user stories were created in the project backlog to describe the main functionality and these were grouped under epics.
 
 ![Jira Backlog](documentation/jira.jpg)
 
