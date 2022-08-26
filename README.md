@@ -75,6 +75,56 @@ MySQL can be used to manage and test the database interactions and can be downlo
 * From the start menu search for MySQL select the MySQL command line client and login using the root password.
 * MySQL server should now be set-up. It is recommended that it is used via MySQL Workbench.
 
+#### Java
+
+Java is the back-end development language used for this project downloads for it can be found [here](https://www.oracle.com/java/technologies/downloads/).
+
+**Installing Java**
+
+* Download and run the Java Development kit one of the latest versions.
+* Install using default settings.
+
+**Setting up Java Environment Variable**
+
+* In the Start Menu search for 'env' then select 'edit the system environment variables'.
+* Select environment variables.
+* At the bottom under system variables select new then enter the following then select ok (note the value should point to the folder where Java jdk is installed)
+
+![Java Variable](documentation/java-variables.jpg)
+
+* Still within the system variables select Path then Edit. In the window that opens select New and then at the bottom add %JAVA_HOME%\bin
+* Click OK on all the windows to confirm.
+* To confirm successful installation open a command prompt and enter java an output similar to the below should be seen.
+
+![Java Command Prompt](documentation/java-installed.jpg)
+
+#### Maven
+
+Maven is used as a build automation tool for the project. It also allows the running of the unit tests it can be downloaded [here](https://maven.apache.org/).
+
+**Installing Maven**
+
+* Download the zip directory.
+* Extract the files into an appropriate folder.
+
+**Setting up Maven Environment Variable**
+
+* In the Start Menu search for 'env' then select 'edit the system environment variables'.
+* Select environment variables.
+* At the bottom under system variables select new twice to enter two new variables M2_HOME and MAVEN_HOME both pointing to the Maven directory (see above for more detailed instructions).
+* Still within the system variables select Path then Edit. In the window that opens select New and then at the bottom add %MAVEN_HOME%\bin
+* Click OK on all the windows to confirm.
+* To confirm successful installation open a command prompt and enter mvn -version.
+
+#### Eclipse
+
+Eclipse has been used as an Integrated Development Environment (IDE) for this project it can be downloaded and installed [here](https://www.eclipse.org/downloads/).
+
+**Installing Eclipse**
+
+* Download and run the installer.
+* Select Eclipse IDE for Java Developers.
+* Select install.
 
 ### Installing
 
