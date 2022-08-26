@@ -137,6 +137,14 @@ These instructions will detail how to open and run the project in Eclipse.
 * Click the directory button next to the import source and browse for and select the project folder.
 * Click finish. The project folder should now be seen in the Package Explorer to the left of the IDE.
 
+#### Setting Up the Database
+
+* Launch MySQL Workbench.
+* Select the local instance and login using the root user and password.
+* Take a note of the localhost information.
+* In Eclipse the db.properties file in the src/main/resources folder update the database url, username and password to match the local system.
+* Open the sql-schema.sql SQL script file in Workbench and execute the statements.
+
 #### Running the Project
 
 * Expand the project folder.
@@ -151,32 +159,29 @@ These instructions will detail how to open and run the project in Eclipse.
 
 * Enter return to return to the welcome page and then stop to stop running the application.
 
-## Running the tests
-
-Explain how to run the automated tests for this system. Break down into which tests and what they do
+## Testing
 
 ### Unit Tests 
 
-Explain what these tests test, why and how to run them
+Unit tests have been written to cover the majority of code in the controller and persistence domain and persistence dao packages. They can be found in the src/test/java folder. The testing coverage of the src/main/java folder is currently at 78% just below industry standard. The main lack of coverage is currently seen in the IMS which contains complicated to test void methods and Utils which manages all user interaction via a Scanner class.
 
-```
-Give an example
-```
+![Testing Coverage](documentation/testing-coverage-ims-project.jpg)
 
-### Integration Tests 
-Explain what these tests test, why and how to run them
+#### Domain
 
-```
-Give an example
-```
+The Classes for the Customer, Item, Order and OrderLineItem entities are found in this folder. Tests have been written to test the constructors, getters and setters and any custom methods.
 
-### And coding style tests
+#### Controllers
 
-Explain what these tests test and why
+Methods controlling the interaction with the user for each entity are found in the controllers classes. These methods call methods in the DAO classes which manage the interaction with the database. All methods in the controller classes have been tested for functionality by using Mockito to mock the response from the user and DAO methods. Tests have been written to verify that each of these mocked methods are called the correct number of times.
 
-```
-Give an example
-```
+#### DAO
+
+The DAO classes manage the interaction with the database with methods to create, read, update and delete table entities. All methods in these files have been tested using an h2 testing database and sample data to ensure that the methods are running correctly and generating the correct returns.
+
+### Running the Tests
+
+To run all the tests right click on the src/test/java folder and select Run As -JUnit test (or Coverage As to see the code coverage). Alternatively right click on the individual test Classes to run these tests alone.
 
 ## Deployment
 
