@@ -199,6 +199,7 @@ public class OrderControllerTest {
 		Order testOrder = new Order(ORDERID, "1234", testCustomer);
 		OrderLineItem testLineItem = new OrderLineItem(1l, testItem, QUANTITY, ORDERID);
 		
+		Mockito.when(utils.getString()).thenReturn("no");
 		Mockito.when(utils.getLong()).thenReturn(ORDERID, ITEMID, QUANTITY);
 		Mockito.when(itemDao.read(ITEMID)).thenReturn(testItem);
 		Mockito.when(dao.read(ORDERID)).thenReturn(testOrder);
@@ -228,6 +229,7 @@ public class OrderControllerTest {
 		Order testOrder = new Order(ORDERID, "1234", testCustomer);
 		OrderLineItem testLineItem = new OrderLineItem(testItem, QUANTITY, ORDERID);
 		
+		Mockito.when(utils.getString()).thenReturn("no");
 		Mockito.when(utils.getLong()).thenReturn(ORDERID, ITEMID, QUANTITY);
 		Mockito.when(itemDao.read(ITEMID)).thenReturn(testItem);
 		Mockito.when(dao.read(ORDERID)).thenReturn(testOrder);
@@ -244,6 +246,25 @@ public class OrderControllerTest {
 		Mockito.verify(lineItemDao, Mockito.times(1)).readByOrderItem(ORDERID, ITEMID);
 		Mockito.verify(lineItemDao, Mockito.times(1)).create(testLineItem);
 		Mockito.verify(dao, Mockito.times(2)).read(ORDERID);
+	}
+	
+	@Test
+	public void testAddItemInvalidOrder() {
+		final long ORDERID = 1l;
+		final long ITEMID = 2l;
+		final long QUANTITY = 5l;
+		
+		Item testItem = new Item(ITEMID, "stuff", 5.00, 6l);
+		
+		Mockito.when(utils.getLong()).thenReturn(ORDERID, ITEMID, QUANTITY);
+		Mockito.when(itemDao.read(ITEMID)).thenReturn(testItem);
+		Mockito.when(dao.read(ORDERID)).thenReturn(null);
+		
+		assertEquals(null, controller.addItem());
+		
+		Mockito.verify(utils, Mockito.times(3)).getLong();
+		Mockito.verify(itemDao, Mockito.times(1)).read(ITEMID);
+		Mockito.verify(dao, Mockito.times(1)).read(ORDERID);
 	}
 	
 	@Test
@@ -273,6 +294,47 @@ public class OrderControllerTest {
 		Mockito.verify(lineItemDao, Mockito.times(1)).delete(testLineItem.getId());
 		Mockito.verify(itemDao, Mockito.times(1)).update(testItem);
 
+	}
+	
+	@Test
+	public void testRemoveItemInvalidOrder() {
+		final long ORDERID = 1l;
+		final long ITEMID = 2l;
+		
+		Item testItem = new Item(ITEMID, "stuff", 5.00, 6l);
+		
+		Mockito.when(utils.getLong()).thenReturn(ORDERID, ITEMID);
+		Mockito.when(itemDao.read(ITEMID)).thenReturn(testItem);
+		Mockito.when(dao.read(ORDERID)).thenReturn(null);
+		
+		assertEquals(null, controller.removeItem());
+		
+		Mockito.verify(utils, Mockito.times(2)).getLong();
+		Mockito.verify(itemDao, Mockito.times(1)).read(ITEMID);
+		Mockito.verify(dao, Mockito.times(1)).read(ORDERID);
+
+	}
+	
+	@Test
+	public void testRemoveItemInvalidLineItem() {
+		final long ORDERID = 1l;
+		final long ITEMID = 2l;
+		
+		Item testItem = new Item(ITEMID, "stuff", 5.00, 6l);
+		Customer testCustomer = new Customer(1l, "James", "Jones");
+		Order testOrder = new Order(ORDERID, "1234", testCustomer);
+		
+		Mockito.when(utils.getLong()).thenReturn(ORDERID, ITEMID);
+		Mockito.when(itemDao.read(ITEMID)).thenReturn(testItem);
+		Mockito.when(dao.read(ORDERID)).thenReturn(testOrder);
+		Mockito.when(lineItemDao.readByOrderItem(ORDERID, ITEMID)).thenReturn(null);
+		
+		assertEquals(null, controller.removeItem());
+		
+		Mockito.verify(utils, Mockito.times(2)).getLong();
+		Mockito.verify(itemDao, Mockito.times(1)).read(ITEMID);
+		Mockito.verify(dao, Mockito.times(1)).read(ORDERID);
+		Mockito.verify(lineItemDao, Mockito.times(1)).readByOrderItem(ORDERID, ITEMID);
 	}
 
 }

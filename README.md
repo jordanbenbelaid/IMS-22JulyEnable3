@@ -21,7 +21,7 @@ The work was was tracked in three sprints using a Kanban board and smart commits
 
 The database schema was planned in advance using an ERD diagram. Focusing on a MVP a simple schema of Customers, Orders and Items was initially created before the more complicated Order Line Items were added.
 
-![ERD](documentation/erd-ims-project.jpg)
+![ERD](documentation/erd-ims-project.png)
 
 ## Running the Project Locally
 
@@ -183,7 +183,7 @@ These instructions will detail how to open and run the project in Eclipse.
 
 ### Unit Tests 
 
-Unit tests have been written to cover the majority of code in the controller and persistence domain and persistence dao packages. They can be found in the src/test/java folder. The testing coverage of the src/main/java folder is currently at 78% just below industry standard. The main lack of coverage is currently seen in the IMS which contains complicated to test void methods and Utils which manages all user interaction via a Scanner class.
+Unit tests have been written to cover the majority of code in the controller and persistence domain and persistence dao packages. They can be found in the src/test/java folder. The testing coverage of the src/main/java folder is currently at 78.6% just below industry standard. The main lack of coverage is currently seen in the IMS which contains complicated to test void methods and Utils which manages all user interaction via a Scanner class.
 
 ![Testing Coverage](documentation/testing-coverage-ims-project.jpg)
 

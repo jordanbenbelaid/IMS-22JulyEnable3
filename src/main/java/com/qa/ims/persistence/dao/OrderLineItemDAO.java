@@ -26,14 +26,21 @@ public class OrderLineItemDAO implements Dao<OrderLineItem> {
 	 * Creates an OrderLineItem instance from the result set
 	 */
 	@Override
-	public OrderLineItem modelFromResultSet(ResultSet resultSet) throws SQLException {
-		ItemDAO itemDAO = new ItemDAO();
-		Long id = resultSet.getLong("id");
-		Long itemId = resultSet.getLong("item_id");
-		Long quantity = resultSet.getLong("quantity");
-		Long orderId = resultSet.getLong("order_id");
-		Item item = itemDAO.read(itemId);
-		return new OrderLineItem(id, item, quantity, orderId);
+	public OrderLineItem modelFromResultSet(ResultSet resultSet) {
+		try {
+			ItemDAO itemDAO = new ItemDAO();
+			Long id = resultSet.getLong("id");
+			Long itemId = resultSet.getLong("item_id");
+			Long quantity = resultSet.getLong("quantity");
+			Long orderId = resultSet.getLong("order_id");
+			Item item = itemDAO.read(itemId);
+			return new OrderLineItem(id, item, quantity, orderId);
+		} catch (SQLException e) {
+			LOGGER.debug(e);
+			LOGGER.info("New line item for this order");
+			return null;
+		}
+		
 	}
 
 	
@@ -107,11 +114,8 @@ public class OrderLineItemDAO implements Dao<OrderLineItem> {
 			statement.setLong(1, orderId);
 			statement.setLong(2, itemId);
 			try (ResultSet resultSet = statement.executeQuery();) {
-				if (resultSet.next()) {
-					resultSet.beforeFirst();
 					resultSet.next();
 					return modelFromResultSet(resultSet);
-				}
 			}
 		} catch (Exception e) {
 			LOGGER.debug(e);
