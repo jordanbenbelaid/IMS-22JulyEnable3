@@ -183,7 +183,7 @@ These instructions will detail how to open and run the project in Eclipse.
 
 ### Unit Tests 
 
-Unit tests have been written to cover the majority of code in the controller and persistence domain and persistence dao packages. They can be found in the src/test/java folder. The testing coverage of the src/main/java folder is currently at 78% just below industry standard. The main lack of coverage is currently seen in the IMS which contains complicated to test void methods and Utils which manages all user interaction via a Scanner class.
+Unit tests have been written to cover the majority of code in the controller and persistence domain and persistence dao packages. They can be found in the src/test/java folder. The testing coverage of the src/main/java folder is currently at 78.6% just below industry standard. The main lack of coverage is currently seen in the IMS which contains complicated to test void methods and Utils which manages all user interaction via a Scanner class.
 
 ![Testing Coverage](documentation/testing-coverage-ims-project.jpg)
 
