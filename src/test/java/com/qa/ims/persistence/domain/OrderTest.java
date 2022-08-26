@@ -75,7 +75,7 @@ public class OrderTest {
 	@Test
 	public void testToString() {
 		testOrder.setId(1l);
-		String expected = "id: 1 orderNumber: abc123 customer: id: 1 first name: Name surname: Surname items: [] total price: 0.0";
+		String expected = "ID: 1 Order Number: abc123 Customer: ID-1 Name Surname Total Price: 0.0\nItems: []";
 		assertEquals(expected, testOrder.toString());
 	}
 	

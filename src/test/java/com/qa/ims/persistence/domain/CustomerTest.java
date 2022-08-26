@@ -48,7 +48,7 @@ public class CustomerTest {
 	@Test
 	public void testToString() {
 		testCustomer.setId(1l);
-		String expected = "id: 1 first name: Name surname: Surname";
+		String expected = "ID: 1 First Name: Name Surname: Surname";
 		assertEquals(expected, testCustomer.toString());
 	}
 	

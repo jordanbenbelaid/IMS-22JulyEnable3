@@ -54,7 +54,7 @@ public class OrderLineItemTest {
 
 	@Test
 	public void testToString() {
-		String expected = "name: Item name quantity: 1";
+		String expected = "Name: Item name Quantity: 1";
 		assertEquals(expected, testLineItem.toString());
 	}
 	

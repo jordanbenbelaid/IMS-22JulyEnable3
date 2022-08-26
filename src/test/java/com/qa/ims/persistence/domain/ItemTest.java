@@ -58,7 +58,7 @@ public class ItemTest {
 	@Test
 	public void testToString() {
 		testItem.setId(1l);
-		String expected = "id: 1 name: Item name price: 50.0 stock: 10";
+		String expected = "ID: 1 Name: Item name Price: 50.0 Stock: 10";
 		assertEquals(expected, testItem.toString());
 	}
 	
