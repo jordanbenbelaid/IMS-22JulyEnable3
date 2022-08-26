@@ -3,11 +3,31 @@ Coverage: 78%
 
 This project is an inventory management system which takes user input via the command-line interface. The user can interact with Customers Items and Orders and can create, read, update and delete each. The user can also add items to the orders. This will update the total price of the order and the stock of that item.
 
-## Getting Started
+## Planning
+
+### Project Management
+
+The project was planned and managed using Jira. The Jira project can be found [here](https://stephanie-ashdown.atlassian.net/jira/software/projects/IMS/boards/3/backlog). A number of user stories were created in the project backlog to describe the main functionality and these were grouped under epics.
+
+![Jira Backlog](documentation/jira.jpg)
+
+A number of required tasks were linked to each user story to track the work required to complete the story.
+
+![Linked Tasks](documentation/linked-tasks.jpg)
+
+The work was was tracked in three sprints using a Kanban board and smart commits to manage the tracking and completion of the tasks. A risk assessment was also created to prepare for any risks that may adversely affect the project.
+
+### Database Schema
+
+The database schema was planned in advance using an ERD diagram. Focusing on a MVP a simple schema of Customers, Orders and Items was initially created before the more complicated Order Line Items were added.
+
+![ERD](documentation/erd-ims-project.jpg)
+
+## Running the Project Locally
 
 These instructions will detail how to get a copy of the project up and running on a local machine for development and testing purposes. It should be noted that these instructions are based on a Windows system.
 
-### Prerequisites
+### Requirements
 
 #### Git
 
@@ -183,21 +203,35 @@ The DAO classes manage the interaction with the database with methods to create,
 
 To run all the tests right click on the src/test/java folder and select Run As -JUnit test (or Coverage As to see the code coverage). Alternatively right click on the individual test Classes to run these tests alone.
 
-## Deployment
+## Packaging the Application to Run in the Command Line
 
-Add additional notes about how to deploy this on a live system
+Maven has been used as a build tool for packaging the application. The process creates a fat .jar file. The following steps can be followed for this.
+
+* Ensure that the correct plugins are included in the pom.xml file. In this version of the project the plugins have already been added.
+* Open a terminal in the project folder.
+* Enter mvn clean
+* Enter mvn package
+* This can also be carried out in Eclipse by right clicking on the project and selecting Run As - Maven build.
+* To run the application, in the command line navigate to to folder containing the .jar file and enter
+```
+java -jar finename.jar
+```
+
 
 ## Built With
 
+* [Java](https://www.java.com/en/) - Backend programming language
 * [Maven](https://maven.apache.org/) - Dependency Management
+* [MySQL](https://www.mysql.com/) - Relational (SQL) Database Management
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning.
+* [Git](https://git-scm.com/) has been used as a version control system.
 
 ## Authors
 
 * **Chris Perrins** - *Initial work* - [christophperrins](https://github.com/christophperrins)
+* **Stephanie Ashdown** - *All other work* - [stephanie-ash](https://github.com/Stephanie-Ash) 
 
 ## License
 
@@ -207,8 +241,6 @@ This project is licensed under the MIT license - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
-# IMS-Start
-# IMS-Start
+* Chris Perrins for the initial work.
+* [Lucidchart](https://www.lucidchart.com/) was used to create the ERD
+* [plantUML](https://plantuml.com/starting) was used to create the UML
