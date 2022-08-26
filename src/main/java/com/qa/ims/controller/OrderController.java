@@ -64,7 +64,7 @@ public class OrderController implements CrudController<Order> {
 		Customer customer = custDAO.read(customerId);
 		if (customer != null) {
 			Order order = orderDAO.create(new Order(orderNumber, customer));
-			LOGGER.info("Order created");
+			LOGGER.info("Order created. Select update to add items");
 			return order;	
 		} else {
 			LOGGER.info("Please try again with a valid customer");
@@ -107,34 +107,42 @@ public class OrderController implements CrudController<Order> {
 	 * the database updates. 
 	 */
 	public Order addItem() {
-		LOGGER.info("Please enter the order id");
-		Long orderId = utils.getLong();
-		LOGGER.info("Please enter the item id");
-		Long itemId = utils.getLong();
-		LOGGER.info("Please enter the item quantity");
-		Long quantity = utils.getLong();
-		Item item = itemDAO.read(itemId);
-		Order order = orderDAO.read(orderId);
-		if (item != null && order != null) {
-			OrderLineItem currentLineItem = lineItemDAO.readByOrderItem(orderId, itemId);
-			OrderLineItem lineItem;
-			
-			if (currentLineItem != null) {
-				currentLineItem.setQuantity(currentLineItem.getQuantity() + quantity);
-				lineItem = lineItemDAO.update(currentLineItem);
+		String repeat = "yes";
+		Order updatedOrder = null;
+		
+		while (repeat.toUpperCase().equals("YES")) {
+			LOGGER.info("Please enter the order id");
+			Long orderId = utils.getLong();
+			LOGGER.info("Please enter the item id");
+			Long itemId = utils.getLong();
+			LOGGER.info("Please enter the item quantity");
+			Long quantity = utils.getLong();
+			Item item = itemDAO.read(itemId);
+			Order order = orderDAO.read(orderId);
+			if (item != null && order != null) {
+				OrderLineItem currentLineItem = lineItemDAO.readByOrderItem(orderId, itemId);
+				OrderLineItem lineItem;
+				
+				if (currentLineItem != null) {
+					currentLineItem.setQuantity(currentLineItem.getQuantity() + quantity);
+					lineItem = lineItemDAO.update(currentLineItem);
+				} else {
+					lineItem = lineItemDAO.create(new OrderLineItem(item, quantity, orderId));
+				}
+				item.updateStock(-quantity);
+				itemDAO.update(item);
+				
+				updatedOrder = calculateTotal(orderId);
+				LOGGER.info(quantity + " of " + item.getName() + " added");
+				LOGGER.info("Would you like to add another item YES or NO?");
+				repeat = utils.getString();
 			} else {
-				lineItem = lineItemDAO.create(new OrderLineItem(item, quantity, orderId));
+				LOGGER.info("Some information you entered is incorrect, please try again");
+				return null;
 			}
-			item.updateStock(-quantity);
-			itemDAO.update(item);
 			
-			Order updatedOrder = calculateTotal(orderId);
-			LOGGER.info(quantity + " of " + item.getName() + " added");
-			return updatedOrder;
-		} else {
-			LOGGER.info("Some information you entered is incorrect, please try again");
-			return null;
 		}
+		return updatedOrder;
 
 	}
 

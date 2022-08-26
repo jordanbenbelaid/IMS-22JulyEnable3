@@ -199,6 +199,7 @@ public class OrderControllerTest {
 		Order testOrder = new Order(ORDERID, "1234", testCustomer);
 		OrderLineItem testLineItem = new OrderLineItem(1l, testItem, QUANTITY, ORDERID);
 		
+		Mockito.when(utils.getString()).thenReturn("no");
 		Mockito.when(utils.getLong()).thenReturn(ORDERID, ITEMID, QUANTITY);
 		Mockito.when(itemDao.read(ITEMID)).thenReturn(testItem);
 		Mockito.when(dao.read(ORDERID)).thenReturn(testOrder);
@@ -228,6 +229,7 @@ public class OrderControllerTest {
 		Order testOrder = new Order(ORDERID, "1234", testCustomer);
 		OrderLineItem testLineItem = new OrderLineItem(testItem, QUANTITY, ORDERID);
 		
+		Mockito.when(utils.getString()).thenReturn("no");
 		Mockito.when(utils.getLong()).thenReturn(ORDERID, ITEMID, QUANTITY);
 		Mockito.when(itemDao.read(ITEMID)).thenReturn(testItem);
 		Mockito.when(dao.read(ORDERID)).thenReturn(testOrder);

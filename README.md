@@ -21,7 +21,7 @@ The work was was tracked in three sprints using a Kanban board and smart commits
 
 The database schema was planned in advance using an ERD diagram. Focusing on a MVP a simple schema of Customers, Orders and Items was initially created before the more complicated Order Line Items were added.
 
-![ERD](documentation/erd-ims-project.jpg)
+![ERD](documentation/erd-ims-project.png)
 
 ## Running the Project Locally
 
