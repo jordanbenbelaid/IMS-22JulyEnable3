@@ -1,7 +1,7 @@
-Coverage: 34%
-# Project Title
+Coverage: 78%
+# Inventory Management System (IMS)
 
-One Paragraph of project description goes here
+This project is an inventory management system which takes user input via the command-line interface. The user can interact with Customers Items and Orders and can create update an delete each. The user can also add items to the orders. This will update the total price of the order and the stock of that item.
 
 ## Getting Started
 
